@@ -19,9 +19,47 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTodos();
     updateStats();
     initializeDarkMode();
-    
-    // Initialize enhanced features
-    initializeEnhancedFeatures();
+      // Initialize enhanced features
+    // initializeEnhancedFeatures();
+
+    // Utility functions
+    function validateTodoInput(text) {
+        if (!text || text.trim().length === 0) {
+            alert('タスクの内容を入力してください');
+            return false;
+        }
+        return true;
+    }
+
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    function updateEmptyState() {
+        // Simple implementation
+        console.log('Update empty state');
+    }
+
+    function getFilteredTodos() {
+        const savedTodos = localStorage.getItem('todos');
+        return savedTodos ? JSON.parse(savedTodos) : [];
+    }
+
+    function announceToScreenReader(message) {
+        console.log('Screen Reader:', message);
+    }
+
+    function initializeEnhancedFeatures() {
+        console.log('Enhanced features initialized');
+    }
 
     // Add event listeners for filtering and sorting
     projectFilter.addEventListener('change', () => {
@@ -71,11 +109,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const incompleteCount = visibleTodos.filter(todo => !todo.completed).length;
         if (incompleteCount > 0) {
             markAllComplete();
-            announceToScreenReader(`${incompleteCount}個のタスクを完了にしました`);
-        } else {
+            announceToScreenReader(`${incompleteCount}個のタスクを完了にしました`);        } else {
             announceToScreenReader('完了にするタスクがありません');
         }
-    });    addTodoBtn.addEventListener('click', () => {
+    });
+
+    addTodoBtn.addEventListener('click', () => {
         const todoText = todoInput.value.trim();
         
         // Enhanced validation
@@ -598,8 +637,90 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Utility Functions
+    function validateTodoInput(text) {
+        if (!text || text.trim().length === 0) {
+            alert('タスクの内容を入力してください');
+            return false;
+        }
+        
+        if (text.length > 500) {
+            alert('タスクの内容は500文字以内で入力してください');
+            return false;
+        }
+        
+        return true;
+    }
+
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    function updateEmptyState() {
+        const todoItems = document.querySelectorAll('#todo-list li');
+        const emptyMessage = document.querySelector('.empty-state');
+        
+        if (todoItems.length === 0) {
+            if (!emptyMessage) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.className = 'empty-state';
+                emptyDiv.textContent = '現在表示するタスクがありません';
+                todoList.appendChild(emptyDiv);
+            }
+        } else {
+            if (emptyMessage) {
+                emptyMessage.remove();
+            }
+        }
+    }
+
+    function getFilteredTodos() {
+        const savedTodos = localStorage.getItem('todos');
+        if (!savedTodos) return [];
+        
+        const todos = JSON.parse(savedTodos);
+        const selectedProject = projectFilter.value;
+        const searchTag = tagFilter.value.trim().toLowerCase().replace('#', '');
+        const selectedPriority = priorityFilter.value;
+        
+        return todos.filter(todo => {
+            const projectMatch = !selectedProject || todo.project === selectedProject;
+            const tagMatch = !searchTag || (todo.tags && todo.tags.some(tag => 
+                tag.toLowerCase().includes(searchTag)
+            ));
+            const priorityMatch = !selectedPriority || todo.priority === selectedPriority;
+            return projectMatch && tagMatch && priorityMatch;
+        });
+    }
+
+    function announceToScreenReader(message, priority = 'polite') {
+        // Simple implementation for screen reader announcements
+        console.log('Screen Reader:', message);
+    }
+
+    function initializeEnhancedFeatures() {
+        // Initialize enhanced features
+        updateEmptyState();
+        
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'Enter' && document.activeElement === todoInput) {
+                e.preventDefault();
+                addTodoBtn.click();
+            }
+        });
+    }
+
     // Enhanced Accessibility and PWA Support
-// Screen Reader Announcements
+    // Screen Reader Announcements
 function announceToScreenReader(message, priority = 'polite') {
     const announcement = document.createElement('div');
     announcement.setAttribute('aria-live', priority);
@@ -1063,5 +1184,4 @@ function updateEmptyState() {
             emptyState.style.display = 'none';
         }
     }
-}
 });
