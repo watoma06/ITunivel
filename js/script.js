@@ -282,12 +282,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderTodos(todos) {
         todoList.innerHTML = ''; // Clear existing list items
-        if (todos && Array.isArray(todos)) {
-            todos.forEach(todo => {
+        if (todos && Array.isArray(todos)) {        todos.forEach(todo => {
                 addTodoItemToDOM(todo);
             });
         }
-    }    function addTodoItemToDOM(todo) {
+    }
+
+    function addTodoItemToDOM(todo) {
         const listItem = document.createElement('li');
         listItem.dataset.id = todo.id;
         listItem.classList.add('todo-item'); // Add todo-item class for touch gestures
