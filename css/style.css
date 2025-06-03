@@ -650,3 +650,1638 @@ input:focus, select:focus {
     border-color: #007bff;
     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }
+
+/* Enhanced Responsive Design */
+/* Extra Small Devices (320px - 479px) */
+@media (max-width: 479px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        margin: 0;
+        padding: 15px;
+        border-radius: 10px;
+    }
+    
+    h1 {
+        font-size: 2em;
+        margin-bottom: 25px;
+    }
+    
+    .controls, .stats-dashboard, .add-todo-form, .action-bar {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .stats-dashboard {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .stat-card {
+        padding: 15px;
+    }
+    
+    .stat-number {
+        font-size: 1.8em;
+    }
+    
+    .filter-section {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .add-todo-form {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    #todo-input {
+        min-width: unset;
+        flex: unset;
+    }
+    
+    .action-bar {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .action-btn {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .todo-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .todo-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .todo-actions button {
+        flex: 1;
+        margin: 0 2px;
+        padding: 10px 8px;
+        font-size: 11px;
+    }
+    
+    .todo-meta {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .project-badge, .priority-badge, .tag {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+    
+    .edit-form {
+        padding: 15px;
+        gap: 12px;
+    }
+    
+    .edit-button-group {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .save-btn, .cancel-btn {
+        width: 100%;
+        padding: 12px;
+    }
+}
+
+/* Small Devices (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+    body {
+        padding: 15px;
+    }
+    
+    .container {
+        margin: 0;
+        padding: 20px;
+        border-radius: 15px;
+    }
+    
+    h1 {
+        font-size: 2.5em;
+        margin-bottom: 30px;
+    }
+    
+    .controls, .stats-dashboard, .add-todo-form, .action-bar {
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+    
+    .stats-dashboard {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .filter-section {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .add-todo-form {
+        flex-direction: column;
+        gap: 18px;
+    }
+    
+    #todo-input {
+        min-width: unset;
+        flex: unset;
+    }
+    
+    .action-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .action-btn {
+        flex: 1;
+        min-width: 140px;
+        max-width: 200px;
+        justify-content: center;
+    }
+    
+    .todo-content {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .todo-actions {
+        align-self: stretch;
+        justify-content: space-between;
+    }
+    
+    .todo-actions button {
+        flex: 1;
+        margin: 0 3px;
+    }
+}
+
+/* Medium Devices - Tablets (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .container {
+        margin: 10px;
+        padding: 30px;
+    }
+    
+    h1 {
+        font-size: 2.8em;
+        margin-bottom: 35px;
+    }
+    
+    .controls, .stats-dashboard, .add-todo-form, .action-bar {
+        padding: 22px;
+    }
+    
+    .stats-dashboard {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+    
+    .filter-section {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+    
+    .add-todo-form {
+        flex-wrap: wrap;
+        gap: 18px;
+    }
+    
+    #todo-input {
+        flex: 2;
+        min-width: 300px;
+    }
+    
+    .action-bar {
+        justify-content: flex-start;
+    }
+    
+    .todo-content {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    
+    .todo-actions {
+        flex-direction: column;
+        gap: 8px;
+        min-width: 120px;
+    }
+    
+    .todo-actions button {
+        width: 100%;
+    }
+}
+
+/* Large Devices - Desktops (1024px - 1199px) */
+@media (min-width: 1024px) and (max-width: 1199px) {
+    .container {
+        max-width: 1000px;
+        padding: 35px;
+    }
+    
+    .stats-dashboard {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .filter-section {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    
+    .add-todo-form {
+        gap: 20px;
+    }
+    
+    #todo-input {
+        flex: 3;
+        min-width: 350px;
+    }
+}
+
+/* Extra Large Devices (1200px+) */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+        padding: 40px;
+    }
+    
+    .stats-dashboard {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+    }
+    
+    .filter-section {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    
+    .todo-actions {
+        flex-direction: row;
+        gap: 12px;
+    }
+}
+
+/* Landscape Orientation for Mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+    }
+    
+    .controls, .stats-dashboard, .add-todo-form, .action-bar {
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+    
+    .stats-dashboard {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+    
+    .stat-card {
+        padding: 10px;
+    }
+    
+    .stat-number {
+        font-size: 1.5em;
+    }
+    
+    .stat-label {
+        font-size: 12px;
+    }
+}
+
+/* High DPI/Retina Display Support */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .project-badge, .priority-badge, .tag {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .todo-actions button {
+        -webkit-font-smoothing: antialiased;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    /* Increase touch targets for mobile devices */
+    .todo-actions button {
+        min-height: 44px;
+        min-width: 44px;
+        padding: 12px 16px;
+    }
+    
+    .action-btn {
+        min-height: 48px;
+        padding: 15px 25px;
+    }
+    
+    .mode-toggle {
+        min-height: 48px;
+        min-width: 48px;
+    }
+    
+    /* Remove hover effects on touch devices */
+    .stat-card:hover,
+    .todo-actions button:hover,
+    .action-btn:hover,
+    .mode-toggle:hover,
+    #todo-list li:hover {
+        transform: none;
+        box-shadow: inherit;
+    }
+    
+    /* Add active states for better touch feedback */
+    .todo-actions button:active {
+        transform: scale(0.95);
+        transition: transform 0.1s ease;
+    }
+    
+    .action-btn:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+}
+
+/* Ultra Small Devices (below 320px) */
+@media (max-width: 319px) {
+    body {
+        padding: 5px;
+        font-size: 12px;
+    }
+    
+    .container {
+        padding: 8px;
+        border-radius: 6px;
+        min-height: calc(100vh - 10px);
+    }
+    
+    h1 {
+        font-size: 1.4em;
+        margin-bottom: 10px;
+    }
+    
+    .controls, .stats-dashboard, .add-todo-form, .action-bar {
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+    
+    .stats-dashboard {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+    
+    .stat-card {
+        padding: 8px;
+        min-height: 50px;
+    }
+    
+    .stat-number {
+        font-size: 1.2em;
+    }
+    
+    .stat-label {
+        font-size: 8px;
+    }
+    
+    .todo-actions button {
+        min-width: 40px;
+        padding: 8px 4px;
+        font-size: 10px;
+    }
+    
+    .project-badge, .priority-badge, .tag {
+        font-size: 8px;
+        padding: 2px 4px;
+    }
+}
+
+/* Foldable Phone Support (Galaxy Fold style) */
+@media (max-width: 280px) {
+    .stats-dashboard {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-bar {
+        flex-direction: column;
+    }
+    
+    .filter-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .todo-actions {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .todo-actions button {
+        width: 100%;
+        min-height: 36px;
+    }
+}
+
+/* Large Tablet and Laptop (1200px - 1599px) */
+@media (min-width: 1200px) and (max-width: 1599px) {
+    .container {
+        max-width: 1400px;
+        padding: 45px;
+    }
+    
+    .stats-dashboard {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+    }
+    
+    .stat-card {
+        padding: 25px;
+    }
+    
+    .stat-number {
+        font-size: 3em;
+    }
+    
+    .filter-section {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    
+    #todo-input {
+        min-width: 400px;
+    }
+}
+
+/* Desktop Large (1600px+) */
+@media (min-width: 1600px) {
+    .container {
+        max-width: 1600px;
+        padding: 50px;
+    }
+    
+    h1 {
+        font-size: 3.5em;
+        margin-bottom: 50px;
+    }
+    
+    .stats-dashboard {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 35px;
+    }
+    
+    .stat-card {
+        padding: 30px;
+    }
+    
+    .stat-number {
+        font-size: 3.5em;
+    }
+    
+    .stat-label {
+        font-size: 16px;
+    }
+    
+    .controls, .add-todo-form, .action-bar {
+        padding: 30px;
+    }
+    
+    #todo-list li {
+        padding: 25px;
+        margin-bottom: 20px;
+    }
+    
+    .todo-text {
+        font-size: 18px;
+    }
+}
+
+/* iPad Specific Optimizations */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+    
+    .container {
+        padding: 35px;
+    }
+    
+    .todo-actions button {
+        min-height: 48px;
+        min-width: 48px;
+        padding: 12px 18px;
+    }
+    
+    .action-btn {
+        min-height: 52px;
+        padding: 16px 24px;
+    }
+    
+    /* Better spacing for iPad portrait */
+    @media (orientation: portrait) {
+        .stats-dashboard {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .filter-section {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    /* Optimized for iPad landscape */
+    @media (orientation: landscape) {
+        .stats-dashboard {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        .filter-section {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        .todo-content {
+            flex-direction: row;
+        }
+        
+        .todo-actions {
+            flex-direction: row;
+            min-width: 200px;
+        }
+    }
+}
+
+/* iPhone X/11/12/13/14 Notch Support */
+@media only screen 
+  and (device-width: 375px) 
+  and (device-height: 812px) 
+  and (-webkit-device-pixel-ratio: 3) {
+    
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+    
+    .mode-toggle {
+        top: calc(10px + env(safe-area-inset-top));
+        right: calc(10px + env(safe-area-inset-right));
+    }
+}
+
+/* Progressive Web App Support */
+@media all and (display-mode: standalone) {
+    body {
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+    }
+    
+    .container {
+        padding-top: 20px;
+    }
+    
+    /* Add app-like spacing */
+    h1 {
+        margin-top: 20px;
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .container {
+        border: 3px solid;
+        background: white;
+    }
+    
+    body.dark-mode .container {
+        background: black;
+        color: white;
+    }
+    
+    .project-badge, .priority-badge, .tag {
+        border: 2px solid;
+        background: transparent;
+    }
+    
+    .todo-actions button {
+        border: 2px solid;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .todo-actions button:hover,
+    .action-btn:hover,
+    #todo-list li:hover {
+        transform: none !important;
+    }
+}
+
+/* Better Focus Visibility */
+@media (prefers-reduced-motion: no-preference) {
+    *:focus {
+        outline: 3px solid #667eea;
+        outline-offset: 2px;
+    }
+    
+    body.dark-mode *:focus {
+        outline-color: #88c0ff;
+    }
+}
+
+/* Horizontal Phone Orientation Improvements */
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 900px) {
+    .container {
+        display: grid;
+        grid-template-areas:
+            "header header"
+            "stats controls"
+            "form form"
+            "actions actions"
+            "todos todos";
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        padding: 10px;
+    }
+    
+    h1 {
+        grid-area: header;
+        margin-bottom: 10px;
+    }
+    
+    .stats-dashboard {
+        grid-area: stats;
+        margin-bottom: 0;
+    }
+    
+    .controls {
+        grid-area: controls;
+        margin-bottom: 0;
+    }
+    
+    .add-todo-form {
+        grid-area: form;
+        margin-bottom: 0;
+    }
+    
+    .action-bar {
+        grid-area: actions;
+        margin-bottom: 0;
+    }
+    
+    #todo-container {
+        grid-area: todos;
+        margin-top: 0;
+    }
+}
+
+/* Very Wide Screens (Ultra-wide monitors) */
+@media (min-width: 2000px) {
+    .container {
+        max-width: 1800px;
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 40px;
+        align-items: start;
+    }
+    
+    .main-content {
+        grid-column: 1;
+    }
+    
+    .sidebar {
+        grid-column: 2;
+        position: sticky;
+        top: 20px;
+    }
+    
+    .stats-dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Container Query Support (Future-proofing) */
+@container (min-width: 600px) {
+    .stats-dashboard {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@container (min-width: 800px) {
+    .stats-dashboard {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white !important;
+        color: black !important;
+        font-size: 12pt;
+        line-height: 1.4;
+    }
+    
+    .container {
+        background: white !important;
+        box-shadow: none !important;
+        border: 1px solid #ccc;
+        margin: 0;
+        padding: 20px;
+        max-width: none;
+    }
+    
+    .controls, .action-bar, .mode-toggle {
+        display: none !important;
+    }
+    
+    .stats-dashboard {
+        background: #f9f9f9 !important;
+        border: 1px solid #ddd;
+        grid-template-columns: repeat(4, 1fr);
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+    }
+    
+    .stat-card {
+        border: 1px solid #ddd;
+        background: white !important;
+    }
+    
+    .todo-actions {
+        display: none !important;
+    }
+    
+    .edit-form {
+        display: none !important;
+    }
+    
+    #todo-list li {
+        background: white !important;
+        border: 1px solid #ddd;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+        margin-bottom: 10px;
+        padding: 15px;
+    }
+    
+    .project-badge, .priority-badge, .tag {
+        background: #f0f0f0 !important;
+        color: black !important;
+        border: 1px solid #ccc;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .priority-high {
+        background: #ffebee !important;
+        border-color: #dc3545 !important;
+    }
+    
+    .priority-medium {
+        background: #fff8e1 !important;
+        border-color: #ffc107 !important;
+    }
+    
+    .priority-low {
+        background: #e8f5e8 !important;
+        border-color: #28a745 !important;
+    }
+    
+    .todo-text {
+        font-size: 14pt;
+        line-height: 1.5;
+    }
+    
+    h1 {
+        font-size: 24pt;
+        color: black !important;
+        text-align: center;
+        margin-bottom: 20px;
+        page-break-after: avoid;
+    }
+    
+    .todo-meta {
+        margin-top: 10px;
+    }
+    
+    /* Add page headers */
+    @page {
+        margin: 2cm;
+        @top-center {
+            content: "Todo List - " counter(page);
+        }
+    }
+    
+    /* Avoid breaking todos across pages */
+    #todo-list li {
+        break-inside: avoid;
+    }
+}
+
+/* Advanced Performance Optimizations */
+@media (prefers-reduced-data: reduce) {
+    /* Reduce visual effects for users on slow connections */
+    * {
+        animation: none !important;
+        transition: none !important;
+        backdrop-filter: none !important;
+        box-shadow: none !important;
+    }
+    
+    .container {
+        background: rgba(255, 255, 255, 0.95);
+    }
+    
+    body.dark-mode .container {
+        background: rgba(30, 30, 50, 0.95);
+    }
+}
+
+/* Screen Reader Optimizations */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Skip Link for Accessibility */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: #667eea;
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 1000;
+    transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+    top: 6px;
+}
+
+/* Focus Management */
+.focus-outline-visible *:focus-visible {
+    outline: 3px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* Apple Watch Support (Theoretical) */
+@media (max-width: 184px) and (max-height: 224px) {
+    body {
+        padding: 2px;
+        font-size: 10px;
+    }
+    
+    .container {
+        padding: 4px;
+        border-radius: 4px;
+    }
+    
+    h1 {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+    
+    .stats-dashboard {
+        grid-template-columns: 1fr;
+        gap: 2px;
+    }
+    
+    .stat-card {
+        padding: 4px;
+        min-height: 30px;
+    }
+    
+    .stat-number {
+        font-size: 14px;
+    }
+    
+    .stat-label {
+        font-size: 6px;
+    }
+    
+    .controls, .add-todo-form, .action-bar {
+        display: none;
+    }
+    
+    #todo-list li {
+        padding: 4px;
+        margin-bottom: 2px;
+    }
+    
+    .todo-text {
+        font-size: 8px;
+        line-height: 1.2;
+    }
+    
+    .todo-actions {
+        display: none;
+    }
+    
+    .project-badge, .priority-badge, .tag {
+        font-size: 6px;
+        padding: 1px 2px;
+    }
+}
+
+/* Smart TV / Large Display Support */
+@media (min-width: 3840px) {
+    body {
+        padding: 100px;
+        font-size: 24px;
+    }
+    
+    .container {
+        max-width: 3000px;
+        padding: 100px;
+    }
+    
+    h1 {
+        font-size: 6em;
+        margin-bottom: 80px;
+    }
+    
+    .stats-dashboard {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 60px;
+    }
+    
+    .stat-card {
+        padding: 60px;
+        border-radius: 30px;
+    }
+    
+    .stat-number {
+        font-size: 6em;
+    }
+    
+    .stat-label {
+        font-size: 32px;
+    }
+    
+    .controls, .add-todo-form, .action-bar {
+        padding: 60px;
+        margin-bottom: 60px;
+        border-radius: 30px;
+    }
+    
+    #todo-input {
+        padding: 30px 40px;
+        font-size: 32px;
+        border-radius: 20px;
+    }
+    
+    #add-todo-btn, .action-btn {
+        padding: 30px 60px;
+        font-size: 28px;
+        border-radius: 20px;
+    }
+    
+    #todo-list li {
+        padding: 40px;
+        margin-bottom: 30px;
+        border-radius: 30px;
+    }
+    
+    .todo-text {
+        font-size: 32px;
+        line-height: 1.5;
+    }
+    
+    .todo-actions button {
+        padding: 20px 40px;
+        font-size: 24px;
+        border-radius: 15px;
+        min-height: 80px;
+        min-width: 120px;
+    }
+    
+    .project-badge, .priority-badge, .tag {
+        font-size: 20px;
+        padding: 15px 30px;
+        border-radius: 25px;
+    }
+    
+    .mode-toggle {
+        width: 100px;
+        height: 100px;
+        font-size: 40px;
+        border-radius: 50px;
+    }
+    
+    /* TV Remote Navigation Support */
+    .focus-ring:focus {
+        outline: 6px solid #667eea;
+        outline-offset: 4px;
+    }
+}
+
+/* E-ink Display Support */
+@media (monochrome) {
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .container {
+        background: white;
+        border: 2px solid black;
+        box-shadow: none;
+    }
+    
+    .stats-dashboard, .controls, .add-todo-form, .action-bar {
+        background: #f5f5f5;
+        border: 1px solid black;
+    }
+    
+    #todo-list li {
+        background: white;
+        border: 1px solid black;
+    }
+    
+    .project-badge, .priority-badge, .tag {
+        background: black;
+        color: white;
+        border: 1px solid black;
+    }
+    
+    .todo-actions button, .action-btn, #add-todo-btn {
+        background: black;
+        color: white;
+        border: 1px solid black;
+    }
+    
+    /* Remove all animations and transitions for e-ink */
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Gaming Device Support (Steam Deck, etc.) */
+@media (min-width: 1024px) and (max-width: 1280px) and (min-height: 720px) and (max-height: 800px) {
+    .container {
+        max-width: 1000px;
+        padding: 30px;
+    }
+    
+    /* Optimize for gaming controls */
+    .todo-actions button {
+        min-height: 50px;
+        min-width: 100px;
+        font-size: 16px;
+    }
+    
+    .action-btn {
+        min-height: 54px;
+        min-width: 120px;
+        font-size: 18px;
+    }
+    
+    /* D-pad friendly navigation */
+    *:focus {
+        outline: 4px solid #667eea;
+        outline-offset: 2px;
+        background-color: rgba(102, 126, 234, 0.1);
+    }
+}
+
+/* Dual Screen / Foldable Device Support */
+@media (spanning: single-fold-vertical) {
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        max-width: none;
+        width: 100%;
+    }
+    
+    .left-panel {
+        grid-column: 1;
+    }
+    
+    .right-panel {
+        grid-column: 2;
+    }
+    
+    .stats-dashboard, .controls, .add-todo-form {
+        grid-column: 1;
+    }
+    
+    #todo-container {
+        grid-column: 2;
+    }
+    
+    .action-bar {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (spanning: single-fold-horizontal) {
+    .container {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 20px;
+        height: 100vh;
+        max-width: none;
+    }
+    
+    .top-section {
+        grid-row: 1;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    
+    .bottom-section {
+        grid-row: 2;
+        overflow-y: auto;
+    }
+    
+    .stats-dashboard {
+        grid-column: 1;
+    }
+    
+    .controls {
+        grid-column: 2;
+    }
+    
+    .add-todo-form {
+        grid-column: 3;
+    }
+    
+    #todo-container {
+        height: 100%;
+        overflow-y: auto;
+    }
+}
+
+/* Variable Font Support */
+@supports (font-variation-settings: normal) {
+    body {
+        font-family: 'Inter var', system-ui, sans-serif;
+        font-variation-settings: 'wght' 400;
+    }
+    
+    h1 {
+        font-variation-settings: 'wght' 700;
+    }
+    
+    .stat-number {
+        font-variation-settings: 'wght' 800;
+    }
+    
+    .todo-actions button {
+        font-variation-settings: 'wght' 600;
+    }
+}
+
+/* CSS Grid Container Queries (Future-proofing) */
+@supports (container-type: inline-size) {
+    .container {
+        container-type: inline-size;
+    }
+    
+    @container (min-width: 600px) {
+        .stats-dashboard {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    @container (min-width: 900px) {
+        .stats-dashboard {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    
+    @container (min-width: 1200px) {
+        .stats-dashboard {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+}
+
+/* Subgrid Support (Future-proofing) */
+@supports (grid-template-rows: subgrid) {
+    .todo-content {
+        display: grid;
+        grid-template-rows: subgrid;
+        grid-row: span 3;
+    }
+}
+
+/* Color Scheme Preference */
+@media (prefers-color-scheme: light) {
+    :root {
+        --primary-bg: rgba(255, 255, 255, 0.95);
+        --secondary-bg: rgba(247, 250, 252, 0.9);
+        --text-color: #333;
+        --border-color: rgba(102, 126, 234, 0.2);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-bg: rgba(30, 30, 50, 0.95);
+        --secondary-bg: rgba(40, 40, 60, 0.9);
+        --text-color: #e0e0e0;
+        --border-color: rgba(102, 126, 234, 0.3);
+    }
+    
+    body:not(.dark-mode) {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        color: var(--text-color);
+    }
+    
+    body:not(.dark-mode) .container {
+        background: var(--primary-bg);
+        color: var(--text-color);
+    }
+    
+    body:not(.dark-mode) .controls,
+    body:not(.dark-mode) .stats-dashboard,
+    body:not(.dark-mode) .add-todo-form,
+    body:not(.dark-mode) .action-bar {
+        background: var(--secondary-bg);
+        border-color: var(--border-color);
+    }
+    
+    body:not(.dark-mode) input,
+    body:not(.dark-mode) select {
+        background: var(--secondary-bg);
+        color: var(--text-color);
+        border-color: var(--border-color);
+    }
+}
+
+/* Dynamic Viewport Support */
+@supports (height: 100dvh) {
+    body {
+        min-height: 100dvh;
+    }
+    
+    .container {
+        min-height: calc(100dvh - 40px);
+    }
+}
+
+@supports (height: 100svh) {
+    @media (max-width: 767px) {
+        body {
+            min-height: 100svh;
+        }
+        
+        .container {
+            min-height: calc(100svh - 20px);
+        }
+    }
+}
+
+/* Modern CSS Features */
+@supports (backdrop-filter: blur(10px)) {
+    .container {
+        backdrop-filter: blur(10px);
+    }
+}
+
+@supports (color: color(display-p3 1 0 0)) {
+    .project-badge {
+        color: color(display-p3 1 1 1);
+    }
+}
+
+/* Forced Colors Mode (Windows High Contrast) */
+@media (forced-colors: active) {
+    .container {
+        background: Canvas;
+        color: CanvasText;
+        border: 1px solid ButtonText;
+    }
+    
+    .todo-actions button,
+    .action-btn,
+    #add-todo-btn {
+        background: ButtonFace;
+        color: ButtonText;
+        border: 1px solid ButtonText;
+    }
+    
+    .todo-actions button:hover,
+    .action-btn:hover,
+    #add-todo-btn:hover {
+        background: Highlight;
+        color: HighlightText;
+    }
+    
+    .project-badge,
+    .priority-badge,
+    .tag {
+        background: Mark;
+        color: MarkText;
+        border: 1px solid ButtonText;
+    }
+    
+    #todo-list li {
+        border: 1px solid ButtonText;
+    }
+}
+
+/* Resolution-based Optimizations */
+@media (min-resolution: 144dpi) {
+    .todo-actions button,
+    .action-btn,
+    .project-badge,
+    .priority-badge,
+    .tag {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Hover Capability Detection */
+@media (hover: hover) {
+    .todo-actions button:hover {
+        transform: translateY(-2px);
+    }
+    
+    .action-btn:hover {
+        transform: translateY(-2px);
+    }
+    
+    #todo-list li:hover {
+        transform: translateY(-5px);
+    }
+}
+
+/* Pointer Precision Detection */
+@media (pointer: fine) {
+    .todo-actions button {
+        min-height: 36px;
+        min-width: 80px;
+    }
+    
+    .mode-toggle {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Offline Styles */
+.offline .container::before {
+    content: 'オフライン';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #dc3545;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    font-size: 12px;
+    z-index: 1001;
+    font-weight: 600;
+}
+
+.offline .container {
+    margin-top: 30px;
+}
+
+/* Error Message Styles */
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 6px;
+    padding: 10px 15px;
+    margin: 10px 0;
+    font-size: 14px;
+    animation: slideIn 0.3s ease;
+}
+
+body.dark-mode .error-message {
+    background: #721c24;
+    color: #f8d7da;
+    border-color: #843534;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Empty State Styles */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6c757d;
+    font-style: italic;
+    background: rgba(248, 249, 250, 0.5);
+    border-radius: 12px;
+    margin: 20px 0;
+    border: 2px dashed #dee2e6;
+}
+
+body.dark-mode .empty-state {
+    background: rgba(40, 40, 60, 0.5);
+    color: #a0a0a0;
+    border-color: #4a4a6a;
+}
+
+.empty-state::before {
+    content: '📝';
+    display: block;
+    font-size: 48px;
+    margin-bottom: 10px;
+    opacity: 0.5;
+}
+
+/* PWA Install Button */
+.action-btn[aria-label*="インストール"] {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    }
+    50% {
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.5);
+    }
+}
+
+/* Loading States */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Improved Accessibility */
+.focus-ring:focus-visible {
+    outline: 3px solid #667eea;
+    outline-offset: 2px;
+}
+
+body.dark-mode .focus-ring:focus-visible {
+    outline-color: #88c0ff;
+}
+
+/* Gesture Feedback */
+.swipe-feedback {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    animation: feedbackFade 1s ease;
+}
+
+@keyframes feedbackFade {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    30% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    70% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(102, 126, 234, 0.7);
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+    background: rgba(136, 192, 255, 0.5);
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+    background: rgba(136, 192, 255, 0.7);
+}
+
+/* Selection Styles */
+::selection {
+    background: rgba(102, 126, 234, 0.3);
+    color: inherit;
+}
+
+::-moz-selection {
+    background: rgba(102, 126, 234, 0.3);
+    color: inherit;
+}
+
+body.dark-mode ::selection {
+    background: rgba(136, 192, 255, 0.3);
+}
+
+body.dark-mode ::-moz-selection {
+    background: rgba(136, 192, 255, 0.3);
+}
+
+/* Animation Preferences */
+@media (prefers-reduced-motion: reduce) {
+    .swipe-feedback,
+    .error-message,
+    .loading::after {
+        animation: none !important;
+    }
+}
+
+/* Content Security */
+.user-generated-content {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+/* Performance Hints */
+.todo-actions button,
+.action-btn,
+.mode-toggle {
+    will-change: transform;
+}
+
+#todo-list {
+    contain: layout style paint;
+}
+
+.stats-dashboard {
+    contain: layout paint;
+}

@@ -1,19 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TODO List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="高機能なTodoアプリケーション - プロジェクト分類、タグ、優先度管理">
+    <meta name="keywords" content="todo, タスク管理, プロジェクト管理, 優先度">
+    <meta name="author" content="Todo App">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#667eea">
+    <meta name="color-scheme" content="light dark">
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Todo App">
+    <meta name="msapplication-TileColor" content="#667eea">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png">
+    <link rel="apple-touch-icon" sizes="128x128" href="/icons/icon-128x128.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png">
+    
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <title>TODO List - プロジェクト管理アプリ</title>
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Todo List App",
+        "description": "プロジェクト分類とタグ管理が可能な高機能Todoアプリケーション",
+        "applicationCategory": "ProductivityApplication",
+        "operatingSystem": "Any"
+    }
+    </script>
 </head>
 <body>
-    <div class="container">
-        <h1>TODO List</h1>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">メインコンテンツにスキップ</a>
+    
+    <div class="container" role="main">
+        <header>
+            <h1 id="app-title">TODO List</h1>
+        </header>
         
         <!-- Filter and Category Controls -->
-        <div class="controls">
+        <section class="controls" aria-labelledby="controls-heading">
+            <h2 id="controls-heading" class="sr-only">フィルターと設定</h2>
             <div class="filter-section">
-                <select id="project-filter">
+                <label for="project-filter" class="sr-only">プロジェクトで絞り込み</label>
+                <select id="project-filter" aria-label="プロジェクトで絞り込み">
                     <option value="">全てのプロジェクト</option>
                     <option value="朝岡パック">朝岡パック</option>
                     <option value="中部開発">中部開発</option>
@@ -23,86 +75,154 @@
                     <option value="みの建築">みの建築</option>
                 </select>
                 
-                <input type="text" id="tag-filter" placeholder="タグで絞り込み (#coding)">
+                <label for="tag-filter" class="sr-only">タグで絞り込み</label>
+                <input type="text" id="tag-filter" placeholder="タグで絞り込み (#coding)" 
+                       aria-label="タグで絞り込み" autocomplete="off">
                 
-                <select id="priority-filter">
+                <label for="priority-filter" class="sr-only">優先度で絞り込み</label>
+                <select id="priority-filter" aria-label="優先度で絞り込み">
                     <option value="">全ての優先度</option>
                     <option value="high">高</option>
                     <option value="medium">中</option>
                     <option value="low">低</option>
                 </select>
                 
-                <select id="sort-filter">
+                <label for="sort-filter" class="sr-only">並び順</label>
+                <select id="sort-filter" aria-label="並び順">
                     <option value="created">作成日順</option>
                     <option value="priority">優先度順</option>
                     <option value="deadline">期限順</option>
                     <option value="project">プロジェクト順</option>
                 </select>
                 
-                <button id="dark-mode-toggle" class="mode-toggle">🌙</button>
+                <button id="dark-mode-toggle" class="mode-toggle focus-ring" 
+                        aria-label="ダークモードの切り替え" 
+                        aria-pressed="false"
+                        title="ダークモードの切り替え">
+                    <span aria-hidden="true">🌙</span>
+                </button>
             </div>
-        </div>
+        </section>
 
         <!-- Statistics Dashboard -->
-        <div class="stats-dashboard">
-            <div class="stat-card">
+        <section class="stats-dashboard" aria-labelledby="stats-heading">
+            <h2 id="stats-heading" class="sr-only">統計情報</h2>
+            <div class="stat-card" role="status" aria-live="polite">
                 <div class="stat-number" id="total-tasks">0</div>
                 <div class="stat-label">総タスク数</div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" role="status" aria-live="polite">
                 <div class="stat-number" id="completed-tasks">0</div>
                 <div class="stat-label">完了済み</div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" role="status" aria-live="polite">
                 <div class="stat-number" id="pending-tasks">0</div>
                 <div class="stat-label">未完了</div>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" role="status" aria-live="polite">
                 <div class="stat-number" id="overdue-tasks">0</div>
                 <div class="stat-label">期限切れ</div>
             </div>
-        </div>
+        </section>
 
         <!-- Add Todo Form -->
-        <div class="add-todo-form">
-            <input type="text" id="todo-input" placeholder="TODOを入力...">
+        <section class="add-todo-form" aria-labelledby="add-todo-heading">
+            <h2 id="add-todo-heading" class="sr-only">新しいタスクを追加</h2>
+            <label for="todo-input" class="sr-only">タスクの内容</label>
+            <input type="text" id="todo-input" placeholder="TODOを入力..." 
+                   aria-label="タスクの内容" required autocomplete="off">
             
-            <select id="project-select">
+            <label for="project-select" class="sr-only">プロジェクトを選択</label>
+            <select id="project-select" aria-label="プロジェクトを選択">
                 <option value="">プロジェクトを選択</option>
                 <option value="朝岡パック">朝岡パック</option>
                 <option value="中部開発">中部開発</option>
                 <option value="JA.life">JA.life</option>
                 <option value="中村健康院">中村健康院</option>
-                <option value="みのボクシングジム">みのボクシングジム</option>
-                <option value="みの建築">みの建築</option>
+                <option value="みのボクシングジム">みのボクシングジム</option>                <option value="みの建築">みの建築</option>
             </select>
             
-            <select id="priority-select">
+            <label for="priority-select" class="sr-only">優先度を選択</label>
+            <select id="priority-select" aria-label="優先度を選択">
                 <option value="medium">優先度: 中</option>
                 <option value="high">優先度: 高</option>
                 <option value="low">優先度: 低</option>
             </select>
             
-            <input type="date" id="deadline-input" title="期限設定">
+            <label for="deadline-input" class="sr-only">期限を設定</label>
+            <input type="date" id="deadline-input" title="期限設定" aria-label="期限を設定">
             
-            <input type="text" id="tags-input" placeholder="タグ (#coding #design)">
+            <label for="tags-input" class="sr-only">タグを入力</label>
+            <input type="text" id="tags-input" placeholder="タグ (#coding #design)" 
+                   aria-label="タグを入力" autocomplete="off">
             
-            <button id="add-todo-btn">Add TODO</button>
-        </div>
+            <button id="add-todo-btn" class="focus-ring" type="button" 
+                    aria-describedby="add-todo-help">
+                <span aria-hidden="true">📝</span> Add TODO
+            </button>
+            <div id="add-todo-help" class="sr-only">
+                上記の入力フィールドに入力してタスクを追加します
+            </div>
+        </section>
 
         <!-- Action Bar -->
-        <div class="action-bar">
-            <button id="export-btn" class="action-btn">📊 エクスポート</button>
-            <button id="clear-completed-btn" class="action-btn">🗑️ 完了済みを削除</button>
-            <button id="mark-all-complete-btn" class="action-btn">✅ 全て完了</button>
-        </div>
+        <section class="action-bar" aria-labelledby="actions-heading">
+            <h2 id="actions-heading" class="sr-only">一括操作</h2>
+            <button id="export-btn" class="action-btn focus-ring" type="button"
+                    aria-describedby="export-help">
+                <span aria-hidden="true">📊</span> エクスポート
+            </button>
+            <div id="export-help" class="sr-only">
+                タスクリストをJSON形式でダウンロードします
+            </div>
+            
+            <button id="clear-completed-btn" class="action-btn focus-ring" type="button"
+                    aria-describedby="clear-help">
+                <span aria-hidden="true">🗑️</span> 完了済みを削除
+            </button>
+            <div id="clear-help" class="sr-only">
+                完了済みのタスクを一括削除します
+            </div>
+            
+            <button id="mark-all-complete-btn" class="action-btn focus-ring" type="button"
+                    aria-describedby="complete-all-help">
+                <span aria-hidden="true">✅</span> 全て完了
+            </button>
+            <div id="complete-all-help" class="sr-only">
+                表示中の全てのタスクを完了にします
+            </div>
+        </section>
 
         <!-- Todo List -->
-        <div id="todo-container">
-            <ul id="todo-list"></ul>
-        </div>
+        <main id="main-content">
+            <section id="todo-container" aria-labelledby="todo-list-heading">
+                <h2 id="todo-list-heading" class="sr-only">タスク一覧</h2>
+                <ul id="todo-list" role="list" aria-live="polite" aria-relevant="additions removals">
+                    <!-- Todos will be dynamically added here -->
+                </ul>
+                <div id="empty-state" class="sr-only" aria-live="polite">
+                    現在表示するタスクがありません
+                </div>
+            </section>
+        </main>
     </div>
-    
+
+    <!-- Load JavaScript -->
     <script src="js/script.js"></script>
+    
+    <!-- Service Worker Registration for PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(function(registrationError) {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
 </body>
 </html>
