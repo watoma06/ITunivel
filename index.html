@@ -24,6 +24,42 @@
                 </select>
                 
                 <input type="text" id="tag-filter" placeholder="タグで絞り込み (#coding)">
+                
+                <select id="priority-filter">
+                    <option value="">全ての優先度</option>
+                    <option value="high">高</option>
+                    <option value="medium">中</option>
+                    <option value="low">低</option>
+                </select>
+                
+                <select id="sort-filter">
+                    <option value="created">作成日順</option>
+                    <option value="priority">優先度順</option>
+                    <option value="deadline">期限順</option>
+                    <option value="project">プロジェクト順</option>
+                </select>
+                
+                <button id="dark-mode-toggle" class="mode-toggle">🌙</button>
+            </div>
+        </div>
+
+        <!-- Statistics Dashboard -->
+        <div class="stats-dashboard">
+            <div class="stat-card">
+                <div class="stat-number" id="total-tasks">0</div>
+                <div class="stat-label">総タスク数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="completed-tasks">0</div>
+                <div class="stat-label">完了済み</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="pending-tasks">0</div>
+                <div class="stat-label">未完了</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="overdue-tasks">0</div>
+                <div class="stat-label">期限切れ</div>
             </div>
         </div>
 
@@ -41,9 +77,24 @@
                 <option value="みの建築">みの建築</option>
             </select>
             
+            <select id="priority-select">
+                <option value="medium">優先度: 中</option>
+                <option value="high">優先度: 高</option>
+                <option value="low">優先度: 低</option>
+            </select>
+            
+            <input type="date" id="deadline-input" title="期限設定">
+            
             <input type="text" id="tags-input" placeholder="タグ (#coding #design)">
             
             <button id="add-todo-btn">Add TODO</button>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="action-bar">
+            <button id="export-btn" class="action-btn">📊 エクスポート</button>
+            <button id="clear-completed-btn" class="action-btn">🗑️ 完了済みを削除</button>
+            <button id="mark-all-complete-btn" class="action-btn">✅ 全て完了</button>
         </div>
 
         <!-- Todo List -->
