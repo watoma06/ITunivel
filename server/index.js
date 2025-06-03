@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path'); // Import path module
-const db = require('./db'); // Import database helper functions
+const db = require('./db'); // Import database helper functions, which now initializes the DB connection
 
 const app = express();
 const port = 3001;
@@ -120,4 +120,19 @@ app.get('*', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}, serving API and React app from client/build`);
+});
+
+// Graceful shutdown
+process.on('SIGINT', async () => {
+  console.log('SIGINT signal received: closing HTTP server and DB connection.');
+  try {
+    await db.closeDbConnection(); // Ensure this is the function exported from db.js
+    console.log('Database connection closed through SIGINT handler.');
+    // server.close() would be here if 'server' was assigned from app.listen()
+    // For simplicity, as app.listen doesn't return the server object directly in this setup:
+    process.exit(0);
+  } catch (err) {
+    console.error('Error during SIGINT shutdown:', err);
+    process.exit(1);
+  }
 });
