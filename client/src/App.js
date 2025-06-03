@@ -6,34 +6,38 @@ import TodoForm from './components/TodoForm';
 import Filter from './components/Filter';
 import ConvenienceLinks from './components/ConvenienceLinks'; // Import ConvenienceLinks
 
-const API_URL = 'http://localhost:3001/api/todos';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api/todos';
 
 function App() {
   const [todos, setTodos] = useState([]); // Initialize with empty array
   const [filterClient, setFilterClient] = useState('');
   const [editingTodo, setEditingTodo] = useState(null); // Holds the todo being edited
+  const [errorMessage, setErrorMessage] = useState(''); // State for error messages
 
   // Fetch Todos
   useEffect(() => {
     const fetchTodos = async () => {
+      setErrorMessage(''); // Clear previous errors
       try {
         const response = await axios.get(API_URL);
         setTodos(response.data);
       } catch (error) {
         console.error("Error fetching todos:", error.response ? error.response.data : error.message);
-        // Optionally, set an error state here to display to the user
+        setErrorMessage('Failed to fetch todos. Please check your connection or try again later.');
       }
     };
     fetchTodos();
   }, []); // Empty dependency array means this runs once on mount
 
   const handleAddTodo = async (newTodoData) => {
+    setErrorMessage(''); // Clear previous errors
     try {
       const response = await axios.post(API_URL, newTodoData);
       setTodos(prevTodos => [...prevTodos, response.data]);
-      // No need to manually set ID, server should handle it
     } catch (error) {
       console.error("Error adding todo:", error.response ? error.response.data : error.message);
+      const serverError = error.response && error.response.data && error.response.data.error;
+      setErrorMessage(serverError || 'Failed to add todo. Please try again.');
     }
   };
 
@@ -42,6 +46,7 @@ function App() {
       setEditingTodo(null);
       return;
     }
+    setErrorMessage(''); // Clear previous errors
     try {
       const response = await axios.put(`${API_URL}/${editingTodo.id}`, updatedTodoData);
       setTodos(prevTodos =>
@@ -52,25 +57,31 @@ function App() {
       setEditingTodo(null); // Clear editing state
     } catch (error) {
       console.error(`Error updating todo with id ${editingTodo.id}:`, error.response ? error.response.data : error.message);
-      // If update fails, you might want to leave editingTodo as is, or provide user feedback
+      const serverError = error.response && error.response.data && error.response.data.error;
+      setErrorMessage(serverError || `Failed to update todo (ID: ${editingTodo.id}). Please try again.`);
     }
   };
 
   const startEditTodo = (todo) => {
+    setErrorMessage(''); // Clear errors when starting an edit
     setEditingTodo(todo);
   };
 
   // Function to cancel editing, called from TodoForm if needed
   const cancelEdit = () => {
+    setErrorMessage(''); // Clear errors on cancel
     setEditingTodo(null);
   };
 
   const handleDeleteTodo = async (idToDelete) => {
+    setErrorMessage(''); // Clear previous errors
     try {
       await axios.delete(`${API_URL}/${idToDelete}`);
       setTodos(prevTodos => prevTodos.filter(todo => todo.id !== idToDelete));
     } catch (error) {
       console.error(`Error deleting todo with id ${idToDelete}:`, error.response ? error.response.data : error.message);
+      const serverError = error.response && error.response.data && error.response.data.error;
+      setErrorMessage(serverError || `Failed to delete todo (ID: ${idToDelete}). Please try again.`);
     }
   };
 
@@ -78,18 +89,21 @@ function App() {
     todo.client && todo.client.toLowerCase().includes(filterClient.toLowerCase())
   );
 
+  // Ensure cancelEdit is passed to TodoForm if it has a cancel button that should use this logic
+  // For now, it's used internally if startEditTodo is called or an update is successful/failed.
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Todo Management</h1>
       </header>
       <main>
-        <ConvenienceLinks /> {/* Add ConvenienceLinks here */}
+        <ConvenienceLinks />
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
         <TodoForm
           onSubmit={editingTodo ? handleUpdateTodo : handleAddTodo}
           initialData={editingTodo}
-          // Pass cancelEdit to TodoForm if you have a cancel button there that needs to clear App's editingTodo state
-          // onCancelEdit={cancelEdit}
+          // onCancelEdit={cancelEdit} // Pass this if TodoForm has an explicit cancel button to call it
         />
         <hr />
         <Filter filterClient={filterClient} setFilterClient={setFilterClient} />

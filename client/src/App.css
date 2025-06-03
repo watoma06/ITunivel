@@ -78,3 +78,13 @@ label {
   font-weight: bold;
   text-align: left;
 }
+
+.error-message {
+  color: #721c24; /* Dark red text */
+  background-color: #f8d7da; /* Light pink background */
+  border: 1px solid #f5c6cb; /* Reddish border */
+  padding: 10px 15px; /* Padding */
+  margin-bottom: 20px; /* Space below message */
+  border-radius: 4px; /* Rounded corners */
+  text-align: center; /* Center the text */
+}
