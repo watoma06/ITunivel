@@ -1,0 +1,52 @@
+/* TodoItem.css */
+.todo-item-row:nth-child(even) {
+  background-color: #f8f9fa; /* Lighter shade for even rows */
+}
+
+.todo-item-row:hover {
+  background-color: #e9ecef; /* Highlight on hover */
+}
+
+.todo-item-row td {
+  /* Styles for individual cells if needed, e.g., vertical-align already in TodoList.css */
+}
+
+.todo-item-row .actions button {
+  margin-right: 8px;
+  padding: 6px 10px; /* Smaller buttons for table actions */
+  font-size: 0.85rem;
+}
+
+.todo-item-row .actions button:last-child {
+  margin-right: 0;
+}
+
+.todo-item-row .actions .edit-button {
+  background-color: #ffc107; /* Yellow for edit */
+  color: #333;
+}
+.todo-item-row .actions .edit-button:hover {
+  background-color: #e0a800;
+}
+
+.todo-item-row .actions .delete-button {
+  background-color: #dc3545; /* Red for delete */
+}
+.todo-item-row .actions .delete-button:hover {
+  background-color: #c82333;
+}
+
+/* Responsive considerations: On smaller screens, maybe display as blocks */
+@media (max-width: 768px) {
+  /* TodoList.css would need to change table display to block or similar */
+  /* TodoItem.js might need to render differently or TodoList.css handles cell display */
+  .todo-item-row td {
+    /* Example: display: block; text-align: right; */
+    /* This usually requires more significant markup changes or more complex CSS */
+  }
+  /* For now, just ensure buttons stack okay if they wrap */
+  .todo-item-row .actions button {
+    display: inline-block; /* Ensure they can stack if space is tight */
+    margin-bottom: 5px;
+  }
+}

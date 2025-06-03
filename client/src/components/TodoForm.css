@@ -1,0 +1,75 @@
+/* TodoForm.css */
+.todo-form {
+  background-color: #f9f9f9; /* Light background for the form area */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin-bottom: 30px; /* Ensure space below form if App.css doesn't cover it */
+}
+
+.todo-form h3 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.todo-form div {
+  margin-bottom: 15px; /* Space between form fields */
+}
+
+.todo-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.todo-form input[type="text"],
+.todo-form input[type="date"],
+.todo-form select {
+  width: 100%; /* Inputs take full width of their container */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding doesn't add to width */
+  font-size: 0.95rem;
+}
+
+.todo-form select {
+  appearance: none; /* For custom arrow if desired, or just default */
+  background-color: #fff; /* Ensure select is white */
+}
+
+.todo-form button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745; /* Green for add/update */
+  color: white;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.todo-form button[type="submit"]:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.todo-form button[type="button"] { /* Style for Cancel Edit button */
+  width: 100%;
+  padding: 10px;
+  background-color: #6c757d; /* Gray for cancel */
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  margin-top: 10px; /* Space above cancel button */
+}
+
+.todo-form button[type="button"]:hover {
+  background-color: #5a6268;
+}
