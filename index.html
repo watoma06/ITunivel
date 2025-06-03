@@ -7,10 +7,51 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>TODO List</h1>
-    <input type="text" id="todo-input">
-    <button id="add-todo-btn">Add TODO</button>
-    <ul id="todo-list"></ul>
+    <div class="container">
+        <h1>TODO List</h1>
+        
+        <!-- Filter and Category Controls -->
+        <div class="controls">
+            <div class="filter-section">
+                <select id="project-filter">
+                    <option value="">全てのプロジェクト</option>
+                    <option value="朝岡パック">朝岡パック</option>
+                    <option value="中部開発">中部開発</option>
+                    <option value="JA.life">JA.life</option>
+                    <option value="中村健康院">中村健康院</option>
+                    <option value="みのボクシングジム">みのボクシングジム</option>
+                    <option value="みの建築">みの建築</option>
+                </select>
+                
+                <input type="text" id="tag-filter" placeholder="タグで絞り込み (#coding)">
+            </div>
+        </div>
+
+        <!-- Add Todo Form -->
+        <div class="add-todo-form">
+            <input type="text" id="todo-input" placeholder="TODOを入力...">
+            
+            <select id="project-select">
+                <option value="">プロジェクトを選択</option>
+                <option value="朝岡パック">朝岡パック</option>
+                <option value="中部開発">中部開発</option>
+                <option value="JA.life">JA.life</option>
+                <option value="中村健康院">中村健康院</option>
+                <option value="みのボクシングジム">みのボクシングジム</option>
+                <option value="みの建築">みの建築</option>
+            </select>
+            
+            <input type="text" id="tags-input" placeholder="タグ (#coding #design)">
+            
+            <button id="add-todo-btn">Add TODO</button>
+        </div>
+
+        <!-- Todo List -->
+        <div id="todo-container">
+            <ul id="todo-list"></ul>
+        </div>
+    </div>
+    
     <script src="js/script.js"></script>
 </body>
 </html>

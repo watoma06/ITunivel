@@ -2,9 +2,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const todoInput = document.getElementById('todo-input');
     const addTodoBtn = document.getElementById('add-todo-btn');
     const todoList = document.getElementById('todo-list');
+    const projectSelect = document.getElementById('project-select');
+    const tagsInput = document.getElementById('tags-input');
+    const projectFilter = document.getElementById('project-filter');
+    const tagFilter = document.getElementById('tag-filter');
 
     // Load todos from localStorage on page load
     loadTodos();
+
+    // Add event listeners for filtering
+    projectFilter.addEventListener('change', filterTodos);
+    tagFilter.addEventListener('input', filterTodos);
 
     addTodoBtn.addEventListener('click', () => {
         const todoText = todoInput.value.trim();
@@ -13,11 +21,18 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Parse tags from tags input
+        const tagsText = tagsInput.value.trim();
+        const tags = tagsText ? tagsText.split(/\s+/).filter(tag => tag.startsWith('#')).map(tag => tag.substring(1)) : [];
+
         // Create new todo with local ID
         const newTodo = {
             id: Date.now(), // Simple ID generation
             text: todoText,
-            completed: false
+            completed: false,
+            project: projectSelect.value,
+            tags: tags,
+            createdAt: new Date().toISOString()
         };
 
         // Save to localStorage
@@ -26,9 +41,32 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add to DOM
         addTodoItemToDOM(newTodo);
         
-        // Clear input
+        // Clear inputs
         todoInput.value = '';
-    });    // LocalStorage functions
+        tagsInput.value = '';
+        projectSelect.value = '';
+    });
+
+    // Filtering function
+    function filterTodos() {
+        const selectedProject = projectFilter.value;
+        const searchTag = tagFilter.value.trim().toLowerCase().replace('#', '');
+        
+        const savedTodos = localStorage.getItem('todos');
+        if (savedTodos) {
+            const todos = JSON.parse(savedTodos);
+            const filteredTodos = todos.filter(todo => {
+                const projectMatch = !selectedProject || todo.project === selectedProject;
+                const tagMatch = !searchTag || (todo.tags && todo.tags.some(tag => 
+                    tag.toLowerCase().includes(searchTag)
+                ));
+                return projectMatch && tagMatch;
+            });
+            renderTodos(filteredTodos);
+        }
+    }
+
+    // LocalStorage functions
     function loadTodos() {
         const savedTodos = localStorage.getItem('todos');
         if (savedTodos) {
@@ -76,17 +114,57 @@ document.addEventListener('DOMContentLoaded', () => {
     function addTodoItemToDOM(todo) {
         const listItem = document.createElement('li');
         listItem.dataset.id = todo.id;
-
-        const textSpan = document.createElement('span');
-        textSpan.textContent = todo.text;
-        listItem.appendChild(textSpan);
-
         if (todo.completed) {
             listItem.classList.add('completed');
         }
 
+        // Create todo content container
+        const todoContent = document.createElement('div');
+        todoContent.classList.add('todo-content');
+
+        // Create text and meta container
+        const textContainer = document.createElement('div');
+        textContainer.style.flex = '1';
+
+        const textSpan = document.createElement('div');
+        textSpan.classList.add('todo-text');
+        textSpan.textContent = todo.text;
+        textContainer.appendChild(textSpan);
+
+        // Create meta information (project and tags)
+        const metaDiv = document.createElement('div');
+        metaDiv.classList.add('todo-meta');
+
+        // Add project badge
+        if (todo.project) {
+            const projectBadge = document.createElement('span');
+            projectBadge.classList.add('project-badge');
+            projectBadge.textContent = todo.project;
+            metaDiv.appendChild(projectBadge);
+        }
+
+        // Add tags
+        if (todo.tags && todo.tags.length > 0) {
+            todo.tags.forEach(tag => {
+                const tagSpan = document.createElement('span');
+                tagSpan.classList.add('tag');
+                // Add specific class for common tags
+                if (['coding', 'design', 'bugfix', 'feature', 'review'].includes(tag.toLowerCase())) {
+                    tagSpan.classList.add(tag.toLowerCase());
+                }
+                tagSpan.textContent = `#${tag}`;
+                metaDiv.appendChild(tagSpan);
+            });
+        }
+
+        textContainer.appendChild(metaDiv);
+        todoContent.appendChild(textContainer);
+
+        // Create actions container
         const actionsDiv = document.createElement('div');
-        actionsDiv.classList.add('todo-actions');        const completeButton = document.createElement('button');
+        actionsDiv.classList.add('todo-actions');
+
+        const completeButton = document.createElement('button');
         completeButton.textContent = todo.completed ? 'Undo' : 'Complete';
         completeButton.classList.add('complete-btn');
         completeButton.addEventListener('click', () => {
@@ -101,7 +179,9 @@ document.addEventListener('DOMContentLoaded', () => {
             listItem.classList.toggle('completed');
             completeButton.textContent = newCompletedStatus ? 'Undo' : 'Complete';
         });
-        actionsDiv.appendChild(completeButton);        const removeButton = document.createElement('button');
+        actionsDiv.appendChild(completeButton);
+
+        const removeButton = document.createElement('button');
         removeButton.textContent = 'Remove';
         removeButton.classList.add('remove-btn');
         removeButton.addEventListener('click', () => {
@@ -115,7 +195,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         actionsDiv.appendChild(removeButton);
 
-        listItem.appendChild(actionsDiv);
+        todoContent.appendChild(actionsDiv);
+        listItem.appendChild(todoContent);
         todoList.appendChild(listItem);
     }
 });
