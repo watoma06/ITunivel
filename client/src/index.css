@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif; /* Simplified font stack */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f4f7f6; /* Light gray-ish background */
+  color: #333; /* Default text color */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Basic reset for padding and margin for common elements */
+h1, h2, h3, h4, h5, h6, p, ul, ol, figure {
+  margin: 0 0 1rem 0; /* Add some default bottom margin */
+  padding: 0;
+}
+
+/* Define some common variables or classes if useful */
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --spacing-unit: 8px;
+}

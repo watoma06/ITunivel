@@ -1,0 +1,24 @@
+# General ignores
+node_modules/
+*.log
+*.lock
+
+# Build outputs
+/client/build/
+/server/node_modules/ # Already in server/.gitignore but good for root too
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDE specific
+.vscode/
+.idea/
+
+# Environment files
+.env
+.env.*
+!/.env.example # if you have one
+
+# Coverage
+coverage/

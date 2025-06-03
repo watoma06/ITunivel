@@ -1,0 +1,36 @@
+/* TodoList.css */
+.todo-list {
+  margin-top: 20px;
+}
+
+.todo-list h3 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.todo-list table {
+  width: 100%;
+  border-collapse: collapse; /* Remove default spacing between cells */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.todo-list th,
+.todo-list td {
+  border: 1px solid #ddd; /* Light border for cells */
+  padding: 12px; /* More padding for readability */
+  text-align: left;
+  vertical-align: middle; /* Align content vertically */
+}
+
+.todo-list th {
+  background-color: #e9ecef; /* Light gray background for headers */
+  color: #333;
+  font-weight: bold;
+}
+
+.todo-list p { /* For "No todos yet" message */
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: #666;
+}
