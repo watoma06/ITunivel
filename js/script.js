@@ -3,47 +3,64 @@ document.addEventListener('DOMContentLoaded', () => {
     const addTodoBtn = document.getElementById('add-todo-btn');
     const todoList = document.getElementById('todo-list');
 
-    fetchTodos();
+    // Load todos from localStorage on page load
+    loadTodos();
 
-    addTodoBtn.addEventListener('click', async () => {
+    addTodoBtn.addEventListener('click', () => {
         const todoText = todoInput.value.trim();
         if (todoText === '') {
             alert("TODO text cannot be empty.");
             return;
         }
 
-        try {
-            const response = await fetch('/api/todos', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ text: todoText }),
-            });
+        // Create new todo with local ID
+        const newTodo = {
+            id: Date.now(), // Simple ID generation
+            text: todoText,
+            completed: false
+        };
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const newTodo = await response.json();
-            addTodoItemToDOM(newTodo); // Add the new item (returned from server with ID) to the DOM
-            todoInput.value = ''; // Clear the input field
-        } catch (error) {
-            console.error("Failed to add todo:", error);
-            alert("Failed to add TODO. Please try again.");
-        }
-    });
-
-    async function fetchTodos() {
-        try {
-            const response = await fetch('/api/todos');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const todos = await response.json();
+        // Save to localStorage
+        saveTodo(newTodo);
+        
+        // Add to DOM
+        addTodoItemToDOM(newTodo);
+        
+        // Clear input
+        todoInput.value = '';
+    });    // LocalStorage functions
+    function loadTodos() {
+        const savedTodos = localStorage.getItem('todos');
+        if (savedTodos) {
+            const todos = JSON.parse(savedTodos);
             renderTodos(todos);
-        } catch (error) {
-            console.error("Failed to fetch todos:", error);
-            // Optionally display an error message to the user
+        }
+    }
+
+    function saveTodo(todo) {
+        const savedTodos = localStorage.getItem('todos');
+        let todos = savedTodos ? JSON.parse(savedTodos) : [];
+        todos.push(todo);
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }
+
+    function updateTodo(todoId, updates) {
+        const savedTodos = localStorage.getItem('todos');
+        if (savedTodos) {
+            let todos = JSON.parse(savedTodos);
+            todos = todos.map(todo => 
+                todo.id == todoId ? { ...todo, ...updates } : todo
+            );
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+    }
+
+    function deleteTodo(todoId) {
+        const savedTodos = localStorage.getItem('todos');
+        if (savedTodos) {
+            let todos = JSON.parse(savedTodos);
+            todos = todos.filter(todo => todo.id != todoId);
+            localStorage.setItem('todos', JSON.stringify(todos));
         }
     }
 
@@ -69,66 +86,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const actionsDiv = document.createElement('div');
-        actionsDiv.classList.add('todo-actions');
-
-        const completeButton = document.createElement('button');
+        actionsDiv.classList.add('todo-actions');        const completeButton = document.createElement('button');
         completeButton.textContent = todo.completed ? 'Undo' : 'Complete';
         completeButton.classList.add('complete-btn');
-        completeButton.addEventListener('click', async () => {
+        completeButton.addEventListener('click', () => {
             const currentCompletedStatus = listItem.classList.contains('completed');
             const newCompletedStatus = !currentCompletedStatus;
             const todoId = listItem.dataset.id;
-            // We also need the current text to send it back, as per current Go PUT handler
-            const currentText = textSpan.textContent;
 
-
-            try {
-                const response = await fetch(`/api/todos/${todoId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    // Go backend expects "text" and "completed" in PUT
-                    body: JSON.stringify({ text: currentText, completed: newCompletedStatus }),
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                // const updatedTodo = await response.json(); // Contains the full updated todo
-                listItem.classList.toggle('completed');
-                completeButton.textContent = newCompletedStatus ? 'Undo' : 'Complete';
-            } catch (error) {
-                console.error(`Failed to update todo ${todoId}:`, error);
-                alert("Failed to update TODO. Please try again.");
-            }
+            // Update localStorage
+            updateTodo(todoId, { completed: newCompletedStatus });
+            
+            // Update DOM
+            listItem.classList.toggle('completed');
+            completeButton.textContent = newCompletedStatus ? 'Undo' : 'Complete';
         });
-        actionsDiv.appendChild(completeButton);
-
-        const removeButton = document.createElement('button');
+        actionsDiv.appendChild(completeButton);        const removeButton = document.createElement('button');
         removeButton.textContent = 'Remove';
         removeButton.classList.add('remove-btn');
-        removeButton.addEventListener('click', async () => {
+        removeButton.addEventListener('click', () => {
             const todoId = listItem.dataset.id;
-            try {
-                const response = await fetch(`/api/todos/${todoId}`, {
-                    method: 'DELETE',
-                });
-
-                if (!response.ok) { // Handles 404 as well for already deleted items
-                    if(response.status === 404) {
-                         console.warn(`Todo ${todoId} not found for deletion.`);
-                         listItem.remove(); // Remove from DOM anyway if server says not found
-                         return;
-                    }
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                // For DELETE, successful response is 204 No Content, so no JSON body
-                listItem.remove();
-            } catch (error) {
-                console.error(`Failed to delete todo ${todoId}:`, error);
-                alert("Failed to delete TODO. Please try again.");
-            }
+            
+            // Delete from localStorage
+            deleteTodo(todoId);
+            
+            // Remove from DOM
+            listItem.remove();
         });
         actionsDiv.appendChild(removeButton);
 
