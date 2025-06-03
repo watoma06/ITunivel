@@ -1,6 +1,6 @@
 body {
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     margin: 0;
     padding: 20px;
     line-height: 1.6;
@@ -30,7 +30,7 @@ body.dark-mode .container {
 }
 
 h1 {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -62,7 +62,7 @@ h1 {
 
 #project-filter, #project-select {
     padding: 12px 18px;
-    border: 2px solid rgba(102, 126, 234, 0.2);
+    border: 2px solid rgba(79, 172, 254, 0.2);
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.9);
     font-size: 14px;
@@ -72,14 +72,14 @@ h1 {
 }
 
 #project-filter:hover, #project-select:hover {
-    border-color: #667eea;
+    border-color: #4facfe;
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.2);
 }
 
 #tag-filter, #tags-input {
     padding: 12px 18px;
-    border: 2px solid rgba(102, 126, 234, 0.2);
+    border: 2px solid rgba(79, 172, 254, 0.2);
     border-radius: 10px;
     font-size: 14px;
     flex: 1;
@@ -90,9 +90,9 @@ h1 {
 }
 
 #tag-filter:hover, #tags-input:hover {
-    border-color: #667eea;
+    border-color: #4facfe;
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.2);
 }
 
 /* Add Todo Form */
@@ -111,7 +111,7 @@ h1 {
 
 #todo-input {
     padding: 15px 20px;
-    border: 2px solid rgba(102, 126, 234, 0.2);
+    border: 2px solid rgba(79, 172, 254, 0.2);
     border-radius: 12px;
     font-size: 16px;
     flex: 2;
@@ -122,14 +122,14 @@ h1 {
 }
 
 #todo-input:hover {
-    border-color: #667eea;
+    border-color: #4facfe;
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.2);
 }
 
 #add-todo-btn {
     padding: 15px 30px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     color: white;
     border: none;
     border-radius: 12px;
@@ -181,11 +181,10 @@ h1 {
 #todo-list li::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0;    left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -221,7 +220,7 @@ h1 {
 }
 
 .project-badge {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     color: white;
     padding: 6px 16px;
     border-radius: 20px;
@@ -335,12 +334,11 @@ h1 {
 /* Edit Form Styles */
 .edit-form {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    flex-direction: column;    gap: 15px;
     padding: 20px;
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    background: linear-gradient(135deg, rgba(79, 172, 254, 0.05) 0%, rgba(0, 242, 254, 0.05) 100%);
     border-radius: 12px;
-    border: 2px solid rgba(102, 126, 234, 0.2);
+    border: 2px solid rgba(79, 172, 254, 0.2);
     margin: 10px 0;
 }
 
