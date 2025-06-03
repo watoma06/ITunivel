@@ -287,13 +287,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 addTodoItemToDOM(todo);
             });
         }
-    }
-
-    function addTodoItemToDOM(todo) {
+    }    function addTodoItemToDOM(todo) {
         const listItem = document.createElement('li');
         listItem.dataset.id = todo.id;
+        listItem.classList.add('todo-item'); // Add todo-item class for touch gestures
         if (todo.completed) {
             listItem.classList.add('completed');
+        }
+
+        // Add swipe hints for touch devices
+        if ('ontouchstart' in window) {
+            listItem.style.position = 'relative';
+            
+            const rightHint = document.createElement('div');
+            rightHint.className = 'swipe-hint right';
+            rightHint.textContent = '✓';
+            rightHint.setAttribute('aria-hidden', 'true');
+            
+            const leftHint = document.createElement('div');
+            leftHint.className = 'swipe-hint left';
+            leftHint.textContent = '🗑';
+            leftHint.setAttribute('aria-hidden', 'true');
+            
+            listItem.appendChild(rightHint);
+            listItem.appendChild(leftHint);
         }
 
         // Create todo content container
@@ -775,45 +792,194 @@ function validateTodoInput(text) {
 function initializeGestureSupport() {
     let touchStartX = 0;
     let touchStartY = 0;
-    const minSwipeDistance = 100;
+    let touchStartTime = 0;
+    let currentTodoItem = null;
+    const minSwipeDistance = 80;
+    const maxSwipeTime = 300; // Maximum time for a swipe gesture
     
+    // Add visual feedback for swipe actions
+    function showSwipeFeedback(message, type = 'info') {
+        const feedback = document.createElement('div');
+        feedback.className = `swipe-feedback ${type}`;
+        feedback.textContent = message;
+        feedback.setAttribute('role', 'status');
+        feedback.setAttribute('aria-live', 'polite');
+        
+        document.body.appendChild(feedback);
+        
+        // Animate in
+        requestAnimationFrame(() => {
+            feedback.style.opacity = '1';
+            feedback.style.transform = 'translate(-50%, -50%) scale(1)';
+        });
+        
+        // Remove after animation
+        setTimeout(() => {
+            if (feedback.parentNode) {
+                feedback.style.opacity = '0';
+                feedback.style.transform = 'translate(-50%, -50%) scale(0.8)';
+                setTimeout(() => {
+                    if (feedback.parentNode) {
+                        document.body.removeChild(feedback);
+                    }
+                }, 300);
+            }
+        }, 2000);
+    }
+    
+    // Touch start handler
     todoList.addEventListener('touchstart', (e) => {
+        const todoItem = e.target.closest('li');
+        if (!todoItem) return;
+        
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
+        touchStartTime = Date.now();
+        currentTodoItem = todoItem;
+        
+        // Add visual feedback for touch start
+        todoItem.style.transition = 'transform 0.2s ease';
     }, { passive: true });
     
+    // Touch move handler for real-time feedback
+    todoList.addEventListener('touchmove', (e) => {
+        if (!currentTodoItem || !touchStartX || !touchStartY) return;
+        
+        const touchCurrentX = e.touches[0].clientX;
+        const deltaX = touchCurrentX - touchStartX;
+        
+        // Provide visual feedback during swipe
+        if (Math.abs(deltaX) > 20) {
+            const maxTransform = 50;
+            const transform = Math.min(Math.abs(deltaX) / 3, maxTransform);
+            const direction = deltaX > 0 ? 1 : -1;
+            
+            currentTodoItem.style.transform = `translateX(${direction * transform}px)`;
+            
+            // Change background color based on swipe direction
+            if (deltaX > 60) {
+                currentTodoItem.style.backgroundColor = 'rgba(34, 197, 94, 0.1)'; // Green for complete
+            } else if (deltaX < -60) {
+                currentTodoItem.style.backgroundColor = 'rgba(239, 68, 68, 0.1)'; // Red for delete
+            } else {
+                currentTodoItem.style.backgroundColor = '';
+            }
+        }
+    }, { passive: true });
+    
+    // Touch end handler
     todoList.addEventListener('touchend', (e) => {
-        if (!touchStartX || !touchStartY) return;
+        if (!currentTodoItem || !touchStartX || !touchStartY) {
+            resetTouchState();
+            return;
+        }
         
         const touchEndX = e.changedTouches[0].clientX;
         const touchEndY = e.changedTouches[0].clientY;
+        const touchEndTime = Date.now();
         
         const deltaX = touchEndX - touchStartX;
         const deltaY = touchEndY - touchStartY;
+        const swipeTime = touchEndTime - touchStartTime;
         
-        // Only proceed if horizontal swipe is dominant
-        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
-            const todoItem = e.target.closest('li');
-            if (todoItem) {
-                const todoId = parseInt(todoItem.dataset.todoId);
+        // Reset visual state
+        currentTodoItem.style.transform = '';
+        currentTodoItem.style.backgroundColor = '';
+        currentTodoItem.style.transition = '';
+        
+        // Check if this qualifies as a swipe gesture
+        const isHorizontalSwipe = Math.abs(deltaX) > Math.abs(deltaY);
+        const isFastEnough = swipeTime <= maxSwipeTime;
+        const isLongEnough = Math.abs(deltaX) >= minSwipeDistance;
+        
+        if (isHorizontalSwipe && isFastEnough && isLongEnough) {
+            const todoId = parseInt(currentTodoItem.dataset.id);
+            
+            if (deltaX > 0) {
+                // Right swipe - complete/uncomplete todo
+                toggleTodoComplete(todoId);
+                const isCompleted = currentTodoItem.classList.contains('completed');
+                const message = isCompleted ? 'タスクを未完了に戻しました' : 'タスクを完了しました';
+                showSwipeFeedback(message, 'success');
+                announceToScreenReader(message);
+            } else {
+                // Left swipe - delete todo
+                showSwipeFeedback('タスクを削除しますか？', 'warning');
                 
-                if (deltaX > 0) {
-                    // Right swipe - complete todo
-                    toggleComplete(todoId);
-                    announceToScreenReader('タスクを完了しました');
-                } else {
-                    // Left swipe - delete todo
-                    if (confirm('このタスクを削除しますか？')) {
-                        removeTodo(todoId);
+                // Use a more accessible confirmation
+                setTimeout(() => {
+                    if (confirm('このタスクを削除しますか？\n\n' + currentTodoItem.querySelector('.todo-text').textContent)) {
+                        deleteTodoById(todoId);
+                        showSwipeFeedback('タスクを削除しました', 'error');
                         announceToScreenReader('タスクを削除しました');
                     }
-                }
+                }, 100);
             }
         }
         
+        resetTouchState();
+    }, { passive: true });
+    
+    // Touch cancel handler
+    todoList.addEventListener('touchcancel', resetTouchState, { passive: true });
+    
+    function resetTouchState() {
+        if (currentTodoItem) {
+            currentTodoItem.style.transform = '';
+            currentTodoItem.style.backgroundColor = '';
+            currentTodoItem.style.transition = '';
+        }
         touchStartX = 0;
         touchStartY = 0;
-    }, { passive: true });
+        touchStartTime = 0;
+        currentTodoItem = null;
+    }
+    
+    // Helper functions for todo operations
+    function toggleTodoComplete(todoId) {
+        const todoItem = document.querySelector(`li[data-id="${todoId}"]`);
+        if (!todoItem) return;
+        
+        const currentCompletedStatus = todoItem.classList.contains('completed');
+        const newCompletedStatus = !currentCompletedStatus;
+        
+        // Update localStorage
+        updateTodo(todoId, { completed: newCompletedStatus });
+        
+        // Update DOM
+        todoItem.classList.toggle('completed');
+        
+        // Update button text
+        const completeButton = todoItem.querySelector('.complete-btn');
+        if (completeButton) {
+            completeButton.textContent = newCompletedStatus ? 'Undo' : 'Complete';
+        }
+        
+        // Update statistics
+        updateStats();
+        updateEmptyState();
+    }
+    
+    function deleteTodoById(todoId) {
+        const todoItem = document.querySelector(`li[data-id="${todoId}"]`);
+        if (!todoItem) return;
+        
+        // Delete from localStorage
+        deleteTodo(todoId);
+        
+        // Remove from DOM with animation
+        todoItem.style.transition = 'all 0.3s ease-out';
+        todoItem.style.opacity = '0';
+        todoItem.style.transform = 'translateX(-100%)';
+        
+        setTimeout(() => {
+            if (todoItem.parentNode) {
+                todoItem.remove();
+            }
+            updateStats();
+            updateEmptyState();
+        }, 300);
+    }
 }
 
 // Performance Optimization
