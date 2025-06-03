@@ -109,7 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const incompleteCount = visibleTodos.filter(todo => !todo.completed).length;
         if (incompleteCount > 0) {
             markAllComplete();
-            announceToScreenReader(`${incompleteCount}個のタスクを完了にしました`);        } else {
+            announceToScreenReader(`${incompleteCount}個のタスクを完了にしました`);
+        } else {
             announceToScreenReader('完了にするタスクがありません');
         }
     });
@@ -151,9 +152,10 @@ document.addEventListener('DOMContentLoaded', () => {
         todoInput.value = '';
         tagsInput.value = '';
         projectSelect.value = '';
-        prioritySelect.value = 'medium';
-        deadlineInput.value = '';
-    });    // Enhanced filtering function
+        prioritySelect.value = 'medium';        deadlineInput.value = '';
+    });
+
+    // Enhanced filtering function
     function filterTodos() {
         const selectedProject = projectFilter.value;
         const searchTag = tagFilter.value.trim().toLowerCase().replace('#', '');
@@ -319,9 +321,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function renderTodos(todos) {
+    function        renderTodos(todos) {
         todoList.innerHTML = ''; // Clear existing list items
-        if (todos && Array.isArray(todos)) {        todos.forEach(todo => {
+        if (todos && Array.isArray(todos)) {
+            todos.forEach(todo => {
                 addTodoItemToDOM(todo);
             });
         }
@@ -1141,8 +1144,7 @@ function initializeVirtualScrolling() {
             }
         });
     });
-    
-    // Observe todo items
+      // Observe todo items
     document.querySelectorAll('#todo-list li').forEach(item => {
         observer.observe(item);
     });
@@ -1161,27 +1163,30 @@ function initializeEnhancedFeatures() {
     
     // Enhanced form validation
     todoInput.addEventListener('blur', () => {
-        if (todoInput.value.trim() && !validateTodoInput(todoInput.value)) {
+    if (todoInput.value.trim() && !validateTodoInput(todoInput.value)) {
             todoInput.focus();
         }
     });
-    
-    // Update empty state
+      // Update empty state
     updateEmptyState();
-}
 
-// Update empty state for better UX
-function updateEmptyState() {
-    const emptyState = document.getElementById('empty-state');
-    const visibleTodos = document.querySelectorAll('#todo-list li:not([style*="display: none"])');
-    
-    if (emptyState) {
-        if (visibleTodos.length === 0) {
-            emptyState.textContent = '現在表示するタスクがありません';
-            emptyState.className = 'empty-state';
-            emptyState.style.display = 'block';
-        } else {
-            emptyState.style.display = 'none';
+    // Update empty state for better UX
+    function updateEmptyState() {
+        const emptyState = document.getElementById('empty-state');
+        const visibleTodos = document.querySelectorAll('#todo-list li:not([style*="display: none"])');
+        
+        if (emptyState) {
+            if (visibleTodos.length === 0) {
+                emptyState.textContent = '現在表示するタスクがありません';
+                emptyState.className = 'empty-state';
+                emptyState.style.display = 'block';
+            } else {
+                emptyState.style.display = 'none';
+            }
         }
     }
+}
+
+// Initialize the application
+initializeEnhancedFeatures();
 });
