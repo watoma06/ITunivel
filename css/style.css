@@ -482,7 +482,8 @@ a:hover {
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    /* Updated gradient to use a more modern blue-to-cyan palette */
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease;
