@@ -18,6 +18,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const tutorialToggle = document.getElementById('tutorial-toggle');
     const tutorialOverlay = document.getElementById('tutorial-overlay');
     const closeTutorial = document.getElementById('close-tutorial');
+    const tutorialMessage = document.getElementById('tutorial-message');
+    const tutorialNext = document.getElementById('tutorial-next');
+    const shortcutToggle = document.getElementById('shortcut-toggle');
+    const shortcutOverlay = document.getElementById('shortcut-overlay');
+    const closeShortcut = document.getElementById('close-shortcut');
+
+    // Autofocus the input on load
+    todoInput.focus();
+
+    const tutorialSteps = [
+        'TODOアプリへようこそ！まずはタスクを入力してみましょう。',
+        'フィルタやソート機能でタスクを整理できます。',
+        'スマホでは右スワイプで完了、左スワイプで削除できます。'
+    ];
+    let currentTutorialStep = 0;
 
     // Load todos and initialize
     loadTodos();
@@ -98,8 +113,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Tutorial overlay
     function showTutorial() {
-        if (tutorialOverlay) {
+        if (tutorialOverlay && tutorialMessage) {
+            currentTutorialStep = 0;
+            tutorialMessage.textContent = tutorialSteps[currentTutorialStep];
             tutorialOverlay.classList.remove('hidden');
+        }
+    }
+
+    function nextTutorialStep() {
+        currentTutorialStep++;
+        if (currentTutorialStep < tutorialSteps.length) {
+            tutorialMessage.textContent = tutorialSteps[currentTutorialStep];
+        } else {
+            hideTutorial();
         }
     }
 
@@ -113,8 +139,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (tutorialToggle) {
         tutorialToggle.addEventListener('click', showTutorial);
     }
+    if (tutorialNext) {
+        tutorialNext.addEventListener('click', nextTutorialStep);
+    }
     if (closeTutorial) {
         closeTutorial.addEventListener('click', hideTutorial);
+    }
+
+    if (shortcutToggle) {
+        shortcutToggle.addEventListener('click', () => {
+            if (shortcutOverlay) {
+                shortcutOverlay.classList.remove('hidden');
+            }
+        });
+    }
+    if (closeShortcut) {
+        closeShortcut.addEventListener('click', () => {
+            if (shortcutOverlay) {
+                shortcutOverlay.classList.add('hidden');
+            }
+        });
     }
 
     if (!localStorage.getItem('tutorialSeen')) {
@@ -188,6 +232,8 @@ document.addEventListener('DOMContentLoaded', () => {
         projectSelect.value = '';
         prioritySelect.value = 'medium';
         deadlineInput.value = '';
+
+        todoInput.focus();
     });
 
     // Enhanced filtering function
@@ -1061,11 +1107,16 @@ function initializeGestureSupport() {
             
             if (deltaX > 0) {
                 // Right swipe - complete/uncomplete todo
-                toggleTodoComplete(todoId);
                 const isCompleted = currentTodoItem.classList.contains('completed');
-                const message = isCompleted ? 'タスクを未完了に戻しました' : 'タスクを完了しました';
-                showSwipeFeedback(message, 'success');
-                announceToScreenReader(message);
+                const confirmMsg = isCompleted ? 'タスクを未完了に戻しますか？' : 'タスクを完了しますか？';
+                if (confirm(confirmMsg)) {
+                    toggleTodoComplete(todoId);
+                    const message = isCompleted ? 'タスクを未完了に戻しました' : 'タスクを完了しました';
+                    showSwipeFeedback(message, 'success');
+                    announceToScreenReader(message);
+                } else {
+                    showSwipeFeedback('操作をキャンセルしました', 'info');
+                }
             } else {
                 // Left swipe - delete todo
                 showSwipeFeedback('タスクを削除しますか？', 'warning');

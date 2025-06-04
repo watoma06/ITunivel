@@ -60,6 +60,22 @@ a {
   text-decoration: none; /* Optional: common practice to remove underline */
 }
 
+/* Skip to content link */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #094067;
+    color: #fff;
+    padding: 8px 12px;
+    z-index: 1000;
+    transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
 a:hover {
   text-decoration: underline; /* Optional: add underline on hover for clarity */
 }
@@ -2432,6 +2448,19 @@ body.dark-mode ::-moz-selection {
     max-width: 300px;
     text-align: center;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.tutorial-controls {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+kbd {
+    background: #eee;
+    border-radius: 3px;
+    padding: 2px 4px;
+    font-size: 0.9em;
 }
 
 /* end of css/style.css */
