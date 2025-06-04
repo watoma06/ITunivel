@@ -8,6 +8,50 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow)
 ![Go](https://img.shields.io/badge/Go-1.21+-00ADD8)
 
+## 🔰 新規参加者向けガイド
+
+このリポジトリには、フロントエンド(HTML/CSS/JavaScript)と Go 製の簡易 API
+サーバーが含まれており、ローカルファースト設計が特徴です。以下は基本的な
+セットアップ手順です。
+
+### セットアップ
+1. リポジトリをクローン
+   ```bash
+   git clone <repository-url>
+   cd Todo
+   ```
+2. Go サーバーを起動する場合
+   ```bash
+   go run main.go
+   ```
+   起動後、ブラウザで `http://localhost:8080` にアクセスします。
+3. フロントエンドだけ確認する場合
+   ```bash
+   python -m http.server 8000  # 例
+   ```
+4. テスト
+   ```bash
+   go test -v
+   ```
+
+### コントリビューション指針
+- Go コードは `gofmt` に従い整形してください。
+- JavaScript は ES6+、CSS は BEM 命名を推奨します。
+- 不具合や要望は Issues へ、質問やアイデア共有には Discussions をご利用ください。
+
+### 主要ファイル
+- `index.html` – アプリ本体
+- `css/style.css` – スタイルシート
+- `js/script.js` – フロントエンドロジック
+- `main.go` – API サーバー
+- `main_test.go` – サーバーテスト
+- `manifest.json` / `sw.js` – PWA 機能
+
+---
+
+以上を参考に開発やカスタマイズを進めてください。ようこそ、このプロジェクト
+へ！
+
 ## 🎯 主な機能
 
 ### 📝 タスク管理
