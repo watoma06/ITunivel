@@ -366,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function addTodoItemToDOM(todo) {
         const listItem = document.createElement('li');
         listItem.dataset.id = todo.id;
-        listItem.classList.add('todo-item'); // Add todo-item class for touch gestures
+        listItem.classList.add('todo-item', 'fade-in'); // Add todo-item class for touch gestures and animation
         if (todo.completed) {
             listItem.classList.add('completed');
         }
@@ -507,9 +507,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // Update statistics
             updateStats();
         });
-        actionsDiv.appendChild(removeButton);todoContent.appendChild(actionsDiv);
+        actionsDiv.appendChild(removeButton);
+        todoContent.appendChild(actionsDiv);
         listItem.appendChild(todoContent);
         todoList.appendChild(listItem);
+
+        listItem.addEventListener('animationend', () => {
+            listItem.classList.remove('fade-in');
+        }, { once: true });
     }
 
     // Edit todo function
