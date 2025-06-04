@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Parse tags from tags input
         const tagsText = tagsInput.value.trim();
-        const tags = tagsText ? tagsText.split(/\s+/).filter(tag => tag.startsWith('#')).map(tag => tag.substring(1)) : [];
+        const tags = parseTags(tagsText);
 
         // Create new todo with enhanced properties
         const newTodo = {
@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             const tagsText = tagsInput.value.trim();
-            const newTags = tagsText ? tagsText.split(/\s+/).filter(tag => tag.startsWith('#')).map(tag => tag.substring(1)) : [];
+            const newTags = parseTags(tagsText);
             
             const updates = {
                 text: newText,
@@ -705,6 +705,15 @@ document.addEventListener('DOMContentLoaded', () => {
             clearTimeout(timeout);
             timeout = setTimeout(later, wait);
         };
+    }
+
+    // Convert user input text into array of tag names.
+    function parseTags(text) {
+        return text
+            ? text.split(/\s+/)
+                  .map(tag => tag.startsWith('#') ? tag.substring(1) : tag)
+                  .filter(tag => tag.length > 0)
+            : [];
     }
 
     function updateEmptyState() {
