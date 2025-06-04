@@ -1,3 +1,6 @@
+import { loadTodos, saveTodo, updateTodo, deleteTodo } from './modules/storage.js';
+import { sortTodos } from './modules/filter.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const todoInput = document.getElementById('todo-input');
     const addTodoBtn = document.getElementById('add-todo-btn');
@@ -35,7 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentTutorialStep = 0;
 
     // Load todos and initialize
-    loadTodos();
+    const initialTodos = loadTodos(t => sortTodos(t, sortFilter.value || 'created'));
+    renderTodos(initialTodos);
     updateStats();
     initializeDarkMode();
       // Initialize enhanced features
@@ -265,26 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Sorting function
-    function sortTodos(todos, sortBy) {
-        return todos.sort((a, b) => {
-            switch (sortBy) {
-                case 'priority':
-                    const priorityOrder = { high: 3, medium: 2, low: 1 };
-                    return (priorityOrder[b.priority] || 2) - (priorityOrder[a.priority] || 2);
-                case 'deadline':
-                    if (!a.deadline && !b.deadline) return 0;
-                    if (!a.deadline) return 1;
-                    if (!b.deadline) return -1;
-                    return new Date(a.deadline) - new Date(b.deadline);
-                case 'project':
-                    return (a.project || '').localeCompare(b.project || '');
-                case 'created':
-                default:
-                    return new Date(b.createdAt) - new Date(a.createdAt);
-            }
-        });
-    }
+    // Sorting handled in modules/filter.js
 
     // Statistics update function
     function updateStats() {
@@ -346,7 +331,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 let todos = JSON.parse(savedTodos);
                 todos = todos.filter(todo => !todo.completed);
                 localStorage.setItem('todos', JSON.stringify(todos));
-                loadTodos();
+                const loaded = loadTodos(t => sortTodos(t, sortFilter.value || 'created'));
+                renderTodos(loaded);
                 updateStats();
             }
         }
@@ -359,50 +345,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 let todos = JSON.parse(savedTodos);
                 todos = todos.map(todo => ({ ...todo, completed: true }));
                 localStorage.setItem('todos', JSON.stringify(todos));
-                loadTodos();
+                const loaded = loadTodos(t => sortTodos(t, sortFilter.value || 'created'));
+                renderTodos(loaded);
                 updateStats();
             }
         }
     }
 
-    // Enhanced loadTodos function
-    function loadTodos() {
-        const savedTodos = localStorage.getItem('todos');
-        if (savedTodos) {
-            const todos = JSON.parse(savedTodos);
-            const sortBy = sortFilter.value || 'created';
-            const sortedTodos = sortTodos(todos, sortBy);
-            renderTodos(sortedTodos);
-        }
-    }
-
-    // LocalStorage functions
-    function saveTodo(todo) {
-        const savedTodos = localStorage.getItem('todos');
-        let todos = savedTodos ? JSON.parse(savedTodos) : [];
-        todos.push(todo);
-        localStorage.setItem('todos', JSON.stringify(todos));
-    }
-
-    function updateTodo(todoId, updates) {
-        const savedTodos = localStorage.getItem('todos');
-        if (savedTodos) {
-            let todos = JSON.parse(savedTodos);
-            todos = todos.map(todo => 
-                todo.id == todoId ? { ...todo, ...updates } : todo
-            );
-            localStorage.setItem('todos', JSON.stringify(todos));
-        }
-    }
-
-    function deleteTodo(todoId) {
-        const savedTodos = localStorage.getItem('todos');
-        if (savedTodos) {
-            let todos = JSON.parse(savedTodos);
-            todos = todos.filter(todo => todo.id != todoId);
-            localStorage.setItem('todos', JSON.stringify(todos));
-        }
-    }
+    // Storage functions are provided by modules/storage.js
 
     function        renderTodos(todos) {
         todoList.innerHTML = ''; // Clear existing list items
