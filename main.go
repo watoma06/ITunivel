@@ -25,9 +25,9 @@ type todoPayload struct {
 }
 
 var (
-	todos  []Todo // In-memory store for TODOs
-	nextID int    = 1 // To simulate auto-incrementing ID
-	mu     sync.Mutex // For thread-safe access to todos and nextID
+	todos  []Todo         // In-memory store for TODOs
+	nextID int        = 1 // To simulate auto-incrementing ID
+	mu     sync.Mutex     // For thread-safe access to todos and nextID
 )
 
 // mainTodosHandler routes requests for /api/todos based on HTTP method
@@ -153,7 +153,7 @@ func updateTodoHandler(w http.ResponseWriter, r *http.Request, id int) {
 	for i, todo := range todos {
 		if todo.ID == id {
 			// Update fields if provided in payload
-			todos[i].Text = payload.Text // Always update text from payload
+			todos[i].Text = payload.Text  // Always update text from payload
 			if payload.Completed != nil { // Only update completed if it was in the payload
 				todos[i].Completed = *payload.Completed
 			}
@@ -201,9 +201,12 @@ func deleteTodoHandler(w http.ResponseWriter, r *http.Request, id int) {
 func main() {
 	mu.Lock()
 	if len(todos) == 0 {
-		todos = append(todos, Todo{ID: nextID, Text: "Learn Go", Completed: false}); nextID++
-		todos = append(todos, Todo{ID: nextID, Text: "Build a TODO app", Completed: true}); nextID++
-		todos = append(todos, Todo{ID: nextID, Text: "Test an item", Completed: false}); nextID++
+		todos = append(todos, Todo{ID: nextID, Text: "Learn Go", Completed: false})
+		nextID++
+		todos = append(todos, Todo{ID: nextID, Text: "Build a TODO app", Completed: true})
+		nextID++
+		todos = append(todos, Todo{ID: nextID, Text: "Test an item", Completed: false})
+		nextID++
 	}
 	mu.Unlock()
 
@@ -211,7 +214,7 @@ func main() {
 	http.HandleFunc("/api/todos", mainTodosHandler) // For GET all and POST
 	http.HandleFunc("/api/todos/", todoByIDHandler) // For GET one, PUT, DELETE by ID
 
-	fs := http.FileServer(http.Dir("./static"))
+	fs := http.FileServer(http.Dir("./public"))
 	http.Handle("/", fs)
 
 	log.Println("Starting server on :8080...")

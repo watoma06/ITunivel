@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
-	"strconv"
-	"sync"
 	"testing"
 )
 
@@ -118,7 +116,6 @@ func TestGetTodoByIDHandler(t *testing.T) {
 		t.Errorf("handler returned wrong status code for non-existent ID: got %v want %v", status, http.StatusNotFound)
 	}
 }
-
 
 func TestUpdateTodoHandler(t *testing.T) {
 	resetState()

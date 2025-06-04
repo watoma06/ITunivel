@@ -95,7 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     clearCompletedBtn.addEventListener('click', () => {
-        const completedCount = todos.filter(todo => todo.completed).length;
+        const savedTodos = localStorage.getItem('todos');
+        const allTodos = savedTodos ? JSON.parse(savedTodos) : [];
+        const completedCount = allTodos.filter(todo => todo.completed).length;
         if (completedCount > 0) {
             clearCompletedTodos();
             announceToScreenReader(`${completedCount}個の完了済みタスクを削除しました`);
