@@ -152,7 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
         todoInput.value = '';
         tagsInput.value = '';
         projectSelect.value = '';
-        prioritySelect.value = 'medium';        deadlineInput.value = '';
+        prioritySelect.value = 'medium';
+        deadlineInput.value = '';
     });
 
     // Enhanced filtering function
@@ -367,7 +368,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const textSpan = document.createElement('div');
         textSpan.classList.add('todo-text');
         textSpan.textContent = todo.text;
-        textContainer.appendChild(textSpan);        // Create meta information (project, tags, priority, deadline)
+        textContainer.appendChild(textSpan);
+        // Create meta information (project, tags, priority, deadline)
         const metaDiv = document.createElement('div');
         metaDiv.classList.add('todo-meta');
 
@@ -430,13 +432,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Create actions container
         const actionsDiv = document.createElement('div');
-        actionsDiv.classList.add('todo-actions');        const editButton = document.createElement('button');
+        actionsDiv.classList.add('todo-actions');
+        const editButton = document.createElement('button');
         editButton.textContent = 'Edit';
         editButton.classList.add('edit-btn');
         editButton.addEventListener('click', () => {
             editTodo(todo.id, textSpan, metaDiv, listItem);
         });
-        actionsDiv.appendChild(editButton);        const completeButton = document.createElement('button');
+        actionsDiv.appendChild(editButton);
+        const completeButton = document.createElement('button');
         completeButton.textContent = todo.completed ? 'Undo' : 'Complete';
         completeButton.classList.add('complete-btn');
         completeButton.addEventListener('click', () => {
