@@ -173,8 +173,8 @@ a:hover {
 
 #add-todo-btn {
     padding: 15px 30px;
-    background-color: var(--newsletter-form-button);
-    color: var(--newsletter-form-button-text);
+    background-color: var(--elements-headline);
+    color: #ffffff;
     border: none;
     border-radius: 12px;
     cursor: pointer;
@@ -342,6 +342,7 @@ a:hover {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    white-space: nowrap;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -482,7 +483,7 @@ a:hover {
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease;
@@ -2286,7 +2287,7 @@ body.dark-mode .focus-ring:focus-visible {
     transform: translateY(-50%);
     font-size: 12px;
     font-weight: 500;
-    opacity: 0.7;
+    opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s ease;
 }

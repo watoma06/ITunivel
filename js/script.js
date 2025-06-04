@@ -37,47 +37,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load todos and initialize
     loadTodos();
     updateStats();
+    updateEmptyState();
     initializeDarkMode();
       // Initialize enhanced features
     // initializeEnhancedFeatures();
 
     // Utility functions
-    function validateTodoInput(text) {
-        if (!text || text.trim().length === 0) {
-            alert('タスクの内容を入力してください');
-            return false;
-        }
-        return true;
-    }
-
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
 
     function updateEmptyState() {
-        // Simple implementation
-        console.log('Update empty state');
+        const emptyState = document.getElementById('empty-state');
+        const visibleTodos = document.querySelectorAll('#todo-list li');
+
+        if (emptyState) {
+            if (visibleTodos.length === 0) {
+                emptyState.textContent = '現在表示するタスクがありません';
+                emptyState.style.display = 'block';
+            } else {
+                emptyState.style.display = 'none';
+            }
+        }
     }
 
     function getFilteredTodos() {
         const savedTodos = localStorage.getItem('todos');
         return savedTodos ? JSON.parse(savedTodos) : [];
-    }
-
-    function announceToScreenReader(message) {
-        console.log('Screen Reader:', message);
-    }
-
-    function initializeEnhancedFeatures() {
-        console.log('Enhanced features initialized');
     }
 
     // Add event listeners for filtering and sorting
@@ -117,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentTutorialStep = 0;
             tutorialMessage.textContent = tutorialSteps[currentTutorialStep];
             tutorialOverlay.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }
 
@@ -150,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         shortcutToggle.addEventListener('click', () => {
             if (shortcutOverlay) {
                 shortcutOverlay.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         });
     }
@@ -225,6 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Update statistics
         updateStats();
+        updateEmptyState();
         
         // Clear inputs
         todoInput.value = '';
@@ -404,7 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function        renderTodos(todos) {
+    function renderTodos(todos) {
         todoList.innerHTML = ''; // Clear existing list items
         if (todos && Array.isArray(todos)) {
             todos.forEach(todo => {
@@ -539,6 +525,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Update statistics
             updateStats();
+            updateEmptyState();
         });
         actionsDiv.appendChild(completeButton);
 
@@ -556,8 +543,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Update statistics
             updateStats();
+            updateEmptyState();
         });
-        actionsDiv.appendChild(removeButton);todoContent.appendChild(actionsDiv);
+        actionsDiv.appendChild(removeButton);
+        todoContent.appendChild(actionsDiv);
         listItem.appendChild(todoContent);
         todoList.appendChild(listItem);
     }
@@ -727,32 +716,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Utility Functions
-    function validateTodoInput(text) {
-        if (!text || text.trim().length === 0) {
-            alert('タスクの内容を入力してください');
-            return false;
-        }
-        
-        if (text.length > 500) {
-            alert('タスクの内容は500文字以内で入力してください');
-            return false;
-        }
-        
-        return true;
-    }
-
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-
     // Convert user input text into array of tag names.
     function parseTags(text) {
         return text
@@ -762,23 +725,6 @@ document.addEventListener('DOMContentLoaded', () => {
             : [];
     }
 
-    function updateEmptyState() {
-        const todoItems = document.querySelectorAll('#todo-list li');
-        const emptyMessage = document.querySelector('.empty-state');
-        
-        if (todoItems.length === 0) {
-            if (!emptyMessage) {
-                const emptyDiv = document.createElement('div');
-                emptyDiv.className = 'empty-state';
-                emptyDiv.textContent = '現在表示するタスクがありません';
-                todoList.appendChild(emptyDiv);
-            }
-        } else {
-            if (emptyMessage) {
-                emptyMessage.remove();
-            }
-        }
-    }
 
     function getFilteredTodos() {
         const savedTodos = localStorage.getItem('todos');
@@ -798,24 +744,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const textMatch = !searchText || todo.text.toLowerCase().includes(searchText);
             const priorityMatch = !selectedPriority || todo.priority === selectedPriority;
             return projectMatch && tagMatch && priorityMatch && textMatch;
-        });
-    }
-
-    function announceToScreenReader(message, priority = 'polite') {
-        // Simple implementation for screen reader announcements
-        console.log('Screen Reader:', message);
-    }
-
-    function initializeEnhancedFeatures() {
-        // Initialize enhanced features
-        updateEmptyState();
-        
-        // Add keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.key === 'Enter' && document.activeElement === todoInput) {
-                e.preventDefault();
-                addTodoBtn.click();
-            }
         });
     }
 
@@ -1261,21 +1189,6 @@ function initializeEnhancedFeatures() {
       // Update empty state
     updateEmptyState();
 
-    // Update empty state for better UX
-    function updateEmptyState() {
-        const emptyState = document.getElementById('empty-state');
-        const visibleTodos = document.querySelectorAll('#todo-list li:not([style*="display: none"])');
-        
-        if (emptyState) {
-            if (visibleTodos.length === 0) {
-                emptyState.textContent = '現在表示するタスクがありません';
-                emptyState.className = 'empty-state';
-                emptyState.style.display = 'block';
-            } else {
-                emptyState.style.display = 'none';
-            }
-        }
-    }
 }
 
 // Initialize the application
