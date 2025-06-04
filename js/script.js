@@ -783,18 +783,6 @@ function announceToScreenReader(message, priority = 'polite') {
 
 // Focus Management
 function manageFocus() {
-    // Skip link functionality
-    const skipLink = document.querySelector('.skip-link');
-    if (skipLink) {
-        skipLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            const mainContent = document.getElementById('main-content');
-            if (mainContent) {
-                mainContent.focus();
-                mainContent.scrollIntoView();
-            }
-        });
-    }
     
     // Focus trap for modals (if any)
     const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';

@@ -1576,24 +1576,6 @@ input:focus, select:focus {
     border: 0;
 }
 
-/* Skip Link for Accessibility */
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 6px;
-    background: #667eea;
-    color: white;
-    padding: 8px;
-    text-decoration: none;
-    border-radius: 4px;
-    z-index: 1000;
-    transition: top 0.3s ease;
-}
-
-.skip-link:focus {
-    top: 6px;
-}
-
 /* Focus Management */
 .focus-outline-visible *:focus-visible {
     outline: 3px solid #667eea;
