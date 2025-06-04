@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tagsInput = document.getElementById('tags-input');
     const projectFilter = document.getElementById('project-filter');
     const tagFilter = document.getElementById('tag-filter');
+    const textFilter = document.getElementById('text-filter');
     const prioritySelect = document.getElementById('priority-select');
     const priorityFilter = document.getElementById('priority-filter');
     const sortFilter = document.getElementById('sort-filter');
@@ -14,6 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportBtn = document.getElementById('export-btn');
     const clearCompletedBtn = document.getElementById('clear-completed-btn');
     const markAllCompleteBtn = document.getElementById('mark-all-complete-btn');
+    const tutorialToggle = document.getElementById('tutorial-toggle');
+    const tutorialOverlay = document.getElementById('tutorial-overlay');
+    const closeTutorial = document.getElementById('close-tutorial');
 
     // Load todos and initialize
     loadTodos();
@@ -70,6 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
         filterTodos();
         updateEmptyState();
     }, 300));
+    textFilter.addEventListener('input', debounce(() => {
+        filterTodos();
+        updateEmptyState();
+    }, 300));
     priorityFilter.addEventListener('change', () => {
         filterTodos();
         updateEmptyState();
@@ -87,6 +95,31 @@ document.addEventListener('DOMContentLoaded', () => {
         darkModeToggle.innerHTML = `<span aria-hidden="true">${isDark ? '☀️' : '🌙'}</span>`;
         announceToScreenReader(`${isDark ? 'ダーク' : 'ライト'}モードに切り替えました`);
     });
+
+    // Tutorial overlay
+    function showTutorial() {
+        if (tutorialOverlay) {
+            tutorialOverlay.classList.remove('hidden');
+        }
+    }
+
+    function hideTutorial() {
+        if (tutorialOverlay) {
+            tutorialOverlay.classList.add('hidden');
+        }
+        localStorage.setItem('tutorialSeen', 'true');
+    }
+
+    if (tutorialToggle) {
+        tutorialToggle.addEventListener('click', showTutorial);
+    }
+    if (closeTutorial) {
+        closeTutorial.addEventListener('click', hideTutorial);
+    }
+
+    if (!localStorage.getItem('tutorialSeen')) {
+        showTutorial();
+    }
 
     // Action buttons with enhanced feedback
     exportBtn.addEventListener('click', () => {
@@ -161,6 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function filterTodos() {
         const selectedProject = projectFilter.value;
         const searchTag = tagFilter.value.trim().toLowerCase().replace('#', '');
+        const searchText = textFilter.value.trim().toLowerCase();
         const selectedPriority = priorityFilter.value;
         const sortBy = sortFilter.value;
         
@@ -174,8 +208,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tagMatch = !searchTag || (todo.tags && todo.tags.some(tag => 
                     tag.toLowerCase().includes(searchTag)
                 ));
+                const textMatch = !searchText || todo.text.toLowerCase().includes(searchText);
                 const priorityMatch = !selectedPriority || todo.priority === selectedPriority;
-                return projectMatch && tagMatch && priorityMatch;
+                return projectMatch && tagMatch && priorityMatch && textMatch;
             });
             
             // Apply sorting
@@ -697,6 +732,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const todos = JSON.parse(savedTodos);
         const selectedProject = projectFilter.value;
         const searchTag = tagFilter.value.trim().toLowerCase().replace('#', '');
+        const searchText = textFilter.value.trim().toLowerCase();
         const selectedPriority = priorityFilter.value;
         
         return todos.filter(todo => {
@@ -704,8 +740,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const tagMatch = !searchTag || (todo.tags && todo.tags.some(tag => 
                 tag.toLowerCase().includes(searchTag)
             ));
+            const textMatch = !searchText || todo.text.toLowerCase().includes(searchText);
             const priorityMatch = !selectedPriority || todo.priority === selectedPriority;
-            return projectMatch && tagMatch && priorityMatch;
+            return projectMatch && tagMatch && priorityMatch && textMatch;
         });
     }
 
@@ -1165,6 +1202,7 @@ function initializeEnhancedFeatures() {
     // Add debounced filter function
     const debouncedFilter = debounce(filterTodos, 300);
     tagFilter.addEventListener('input', debouncedFilter);
+    textFilter.addEventListener('input', debouncedFilter);
     
     // Enhanced form validation
     todoInput.addEventListener('blur', () => {

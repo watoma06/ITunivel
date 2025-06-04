@@ -58,6 +58,7 @@
     <div class="container" role="main">
         <header>
             <h1 id="app-title">TODO List</h1>
+            <button id="tutorial-toggle" class="help-btn focus-ring" aria-label="チュートリアルを表示">❔</button>
         </header>
         
         <!-- Filter and Category Controls -->
@@ -76,8 +77,12 @@
                 </select>
                 
                 <label for="tag-filter" class="sr-only">タグで絞り込み</label>
-                <input type="text" id="tag-filter" placeholder="タグで絞り込み (#coding)" 
+                <input type="text" id="tag-filter" placeholder="タグで絞り込み (#coding)"
                        aria-label="タグで絞り込み" autocomplete="off">
+
+                <label for="text-filter" class="sr-only">タスクを検索</label>
+                <input type="text" id="text-filter" placeholder="タスク検索"
+                       aria-label="タスクを検索" autocomplete="off">
                 
                 <label for="priority-filter" class="sr-only">優先度で絞り込み</label>
                 <select id="priority-filter" aria-label="優先度で絞り込み">
@@ -205,6 +210,13 @@
                 </div>
             </section>
         </main>
+
+        <div id="tutorial-overlay" class="tutorial-overlay hidden" role="dialog" aria-modal="true">
+            <div class="tutorial-content">
+                <p>TODOアプリへようこそ！タスクを追加し、フィルタを活用してみてください。</p>
+                <button id="close-tutorial" class="focus-ring">閉じる</button>
+            </div>
+        </div>
     </div>
 
     <!-- Load JavaScript -->
