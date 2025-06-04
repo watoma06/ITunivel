@@ -52,11 +52,14 @@
     </script>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">メインコンテンツへスキップ</a>
     <div class="container" role="main">
         <header>
             <h1 id="app-title">TODO List</h1>
             <button id="tutorial-toggle" class="help-btn focus-ring" aria-label="チュートリアルを表示">❔</button>
+            <button id="shortcut-toggle" class="help-btn focus-ring" aria-label="ショートカット一覧を表示">⌨️</button>
         </header>
+
         
         <!-- Filter and Category Controls -->
         <section class="controls" aria-labelledby="controls-heading">
@@ -210,8 +213,24 @@
 
         <div id="tutorial-overlay" class="tutorial-overlay hidden" role="dialog" aria-modal="true">
             <div class="tutorial-content">
-                <p>TODOアプリへようこそ！タスクを追加し、フィルタを活用してみてください。</p>
-                <button id="close-tutorial" class="focus-ring">閉じる</button>
+                <p id="tutorial-message">TODOアプリへようこそ！</p>
+                <div class="tutorial-controls">
+                    <button id="tutorial-next" class="focus-ring">次へ</button>
+                    <button id="close-tutorial" class="focus-ring">閉じる</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="shortcut-overlay" class="tutorial-overlay hidden" role="dialog" aria-modal="true">
+            <div class="tutorial-content">
+                <h2>キーボードショートカット</h2>
+                <ul>
+                    <li><kbd>Ctrl</kbd>+<kbd>Enter</kbd> : タスク追加</li>
+                    <li><kbd>Ctrl</kbd>+<kbd>F</kbd> : タグ検索へ移動</li>
+                    <li><kbd>Ctrl</kbd>+<kbd>D</kbd> : ダークモード切替</li>
+                    <li><kbd>Ctrl</kbd>+<kbd>E</kbd> : エクスポート</li>
+                </ul>
+                <button id="close-shortcut" class="focus-ring">閉じる</button>
             </div>
         </div>
     </div>
