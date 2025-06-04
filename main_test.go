@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
-	"strconv"
-	"sync"
 	"testing"
 )
 
@@ -85,6 +83,25 @@ func TestAddTodoHandler(t *testing.T) {
 	mu.Unlock()
 }
 
+func TestAddTodoHandlerInvalidJSON(t *testing.T) {
+	resetState()
+	// Intentionally malformed JSON payload
+	payload := []byte(`{"text":"Missing quote}`)
+	req, err := http.NewRequest("POST", "/api/todos", bytes.NewBuffer(payload))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(mainTodosHandler)
+	handler.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusBadRequest {
+		t.Errorf("handler returned wrong status code for invalid JSON: got %v want %v", status, http.StatusBadRequest)
+	}
+}
+
 func TestGetTodoByIDHandler(t *testing.T) {
 	resetState()
 	// Test getting an existing TODO
@@ -118,7 +135,6 @@ func TestGetTodoByIDHandler(t *testing.T) {
 		t.Errorf("handler returned wrong status code for non-existent ID: got %v want %v", status, http.StatusNotFound)
 	}
 }
-
 
 func TestUpdateTodoHandler(t *testing.T) {
 	resetState()
@@ -154,6 +170,23 @@ func TestUpdateTodoHandler(t *testing.T) {
 
 	if status := rrNonExistent.Code; status != http.StatusNotFound {
 		t.Errorf("handler returned wrong status code for non-existent update: got %v want %v", status, http.StatusNotFound)
+	}
+}
+
+func TestUpdateTodoHandlerInvalidID(t *testing.T) {
+	resetState()
+	updatePayload := []byte(`{"text":"Updated"}`)
+	req, err := http.NewRequest("PUT", "/api/todos/abc", bytes.NewBuffer(updatePayload))
+	if err != nil {
+		t.Fatal(err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	rr := httptest.NewRecorder()
+	http.DefaultServeMux.ServeHTTP(rr, req)
+
+	if status := rr.Code; status != http.StatusBadRequest {
+		t.Errorf("handler returned wrong status code for non-numeric ID: got %v want %v", status, http.StatusBadRequest)
 	}
 }
 
