@@ -37,8 +37,7 @@
 ### コントリビューション指針
 - Go コードは `gofmt` に従い整形してください。
 - JavaScript は ES6+、CSS は BEM 命名を推奨します。
-- 不具合や要望は Issues へ、質問やアイデア共有には Discussions をご利用くだ
-  さい。
+- 不具合や要望は Issues へ、質問やアイデア共有には Discussions をご利用ください。
 
 ### 主要ファイル
 - `index.html` – アプリ本体
